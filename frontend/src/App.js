@@ -1,56 +1,9 @@
-import {
-  React,
-  useState
-} from 'react';
+import React from 'react';
+import AuthPage from './AuthPage.js';
 
-const App = (props) => {
+const App = () => {
   return (<>
-    <div
-    >
-      {/*Inner box*/}
-      <div
-      >
-        <div>
-          <AuthBox />
-        </div>
-        <img />
-      </div>
-    </div>
-  </>);
-}
-
-const AuthBox = () => {
-  const [loginOn, setLoginOn] = useState(true);
-
-  const authState = (loginOn)
-    ? <LoginCard />
-    : <RegistrationCard />;
-  return (<>
-    <ToggleBar 
-      loginOn={loginOn}
-      setLoginOn={setLoginOn}
-    />
-    {authState}
-  </>);
-};
-
-const ToggleBar = ({loginOn, setLoginOn}) => {
-  return (<>
-    <button onClick={() => setLoginOn(!loginOn)}>
-      Click me!
-    </button>
-  </>);
-};
-
-const LoginCard = () => {
-  return (<>
-    <p>Login</p>
-  </>);
-};
-
-const RegistrationCard = () => {
-  return (<>
-    <p>Registration</p>
+    <AuthPage />
   </>);
 };
 
