@@ -43,14 +43,56 @@ const ToggleBar = ({loginOn, setLoginOn}) => {
   </>);
 };
 
+// WARNING PSUEDOCODE AHEAD
+
 const LoginCard = () => {
-  let string = "fsdf";
+  username, setUsername = useState
+  password, setPassword = useState
+  function submitData {
+    const submitObject ={
+      // fill in based on POST api
+      username: username,
+      password: password
+    }
+    axios.post('group8awesomeproject.com/Login.php', submitObject);
+    .then((response) => {
+      switch (response.data.code) {
+        case 200:
+          Yay! Switch page
+        case 401:
+          display error message
+      }
+    });
+  }
   return (<>
+    <form
+      isActive
+    >
+    </form>
     <p>{string}</p>
+    button onClick, submitData
   </>);
 };
 
 const RegistrationCard = () => {
+  function submitData {
+    const submitObject ={
+      // fill in based on POST api
+      username: username,
+      password: password,
+      name: name,
+      email: email
+    }
+    axios.post('group8awesomeproject.com/Login.php', submitObject);
+    .then((response) => {
+      switch (response.data.code) {
+        case 200:
+          Yay! Switch page
+        case 401:
+          display error message
+      }
+    });
+  }
   return (<>
     <p>Registration</p>
   </>);
