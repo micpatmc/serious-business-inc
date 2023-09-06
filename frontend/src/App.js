@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  React,
+  useState
+} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = (props) => {
+  return (<>
+    <div
+    >
+      {/*Inner box*/}
+      <div
+      >
+        <div>
+          <AuthBox />
+        </div>
+        <img />
+      </div>
     </div>
-  );
+  </>);
 }
+
+const AuthBox = () => {
+  const [loginOn, setLoginOn] = useState(true);
+
+  const authState = (loginOn)
+    ? <LoginCard />
+    : <RegistrationCard />;
+  return (<>
+    <ToggleBar 
+      loginOn={loginOn}
+      setLoginOn={setLoginOn}
+    />
+    {authState}
+  </>);
+};
+
+const ToggleBar = ({loginOn, setLoginOn}) => {
+  return (<>
+    <button onClick={() => setLoginOn(!loginOn)}>
+      Click me!
+    </button>
+  </>);
+};
+
+const LoginCard = () => {
+  return (<>
+    <p>Login</p>
+  </>);
+};
+
+const RegistrationCard = () => {
+  return (<>
+    <p>Registration</p>
+  </>);
+};
 
 export default App;
