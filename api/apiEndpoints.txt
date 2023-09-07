@@ -1,0 +1,190 @@
+swagger: '2.0'
+info:
+  description: This is the API documentation for team 8s project
+  version: 1.0.0
+  title: team 8s project
+  # put the contact info for your development or API team
+  contact:
+    email: li130064@ucf.edu
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+
+paths:
+  /Login.php:
+    post:
+      tags:
+      - Users
+      summary: Logs in to team 8 website
+      operationId: dlLogin
+      description: Logs in to team 8 website
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Login
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /AddUser.php:
+    post:
+      tags:
+      - Users
+      summary: Adds a user
+      operationId: AddUser
+      description: Adds a user to the database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Color
+        schema:
+          $ref: '#/definitions/AddUser'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found 
+        500:
+          description: Server Error
+  /AddContact.php:
+    post:
+      tags:
+      - Users
+      summary: Adds a contact
+      operationId: AddContact
+      description: Adds a contact to the database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Contact
+        schema:
+          $ref: '#/definitions/AddContact'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found 
+        500:
+          description: Server Error
+  
+  #search section, needs editing, don't forget to change definitions at the bottom as well
+  /SearchColors.php:
+    post:
+      tags:
+      - Search
+      summary: Searches colors
+      operationId: searchColor
+      description: Searches colors from the color app database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: searchItem
+        description: Color Search
+        schema:
+          $ref: '#/definitions/Search'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+
+
+definitions:
+  Login:
+    type: object
+    required:
+    - login
+    - password
+    properties:
+      login:
+        type: string
+        example: "fred"
+      password:
+        type: string
+        example: "secret"
+
+  AddUser:
+    type: object
+    required:
+    - login
+    - password
+    - FristName
+    - LastName
+    properties:
+      userId:
+        type: string
+        example: "username"
+      password:
+        type: string
+        example: "secret"
+      FirstName:
+        type: string
+        example: "Ollie"
+      LastName:
+        type: string
+        example: "Schnitzius"
+  AddContact:
+    type: object
+    required:
+    - FirstName
+    - LastName
+    - Email
+    - Phone
+    properties:
+      FirstName:
+        type: string
+        example: "Ollie"
+      LastName:
+        type: string
+        example: "Schnitzius"
+      Email:
+        type: string
+        example: "li130064@ucf.edu"
+      Phone:
+        type: integer
+        example: 112223333
+  Search:
+    type: object
+    required:
+    - userId
+    - search
+    properties:
+      userId:
+        type: integer
+        example: 1
+      search:
+        type: string
+        example: "bl"
+
+
+
+
+
+host: COP4331-5.com
+basePath: /LAMPAPI
+schemes:
+- http
