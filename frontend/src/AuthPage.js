@@ -107,7 +107,7 @@ const ToggleBar = ({loginOn, setLoginOn}) => {
 
 const LoginCard = () => {
   const [credentials, setCredentials] = useState({
-    username: '',
+    login: '',
     password: ''
   });
 
@@ -116,6 +116,10 @@ const LoginCard = () => {
       ...credentials,
       [key]: e.target.value
     });
+  }
+
+  const handleSubmit = e => {
+    axios.post('')
   }
 
   return (
@@ -130,15 +134,21 @@ const LoginCard = () => {
       <label>
         Username
         <input
-          value={credentials.username}
-          onChange={e => handleChange(e, 'username')}
+          value={credentials.login}
+          onChange={e => handleChange(e, 'login')}
         />
       </label>
       <label>
         Password
-        <input type="text" name="name" />
+        <input
+          value={credentials.password}
+          onChange={e => handleChange(e, 'password')}
+        />
       </label>
-      <input type="submit" value="Submit" />
+      <input
+        type="submit"
+        onSubmit={e => handleSubmit(e)}
+      />
     </form>
   </div>);
 };
