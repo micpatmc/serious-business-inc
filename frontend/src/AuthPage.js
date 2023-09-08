@@ -3,21 +3,43 @@ import {
   useState
 } from 'react';
 import axios from 'axios';
+import stockArt from './images/loginPageArt.jpg'
 
 const AuthPage = (props) => {
-  return (<>
+  return (
     <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "white"
+      }}
     >
       {/*Inner box*/}
       <div
+        style={{
+          height: "80vh",
+          margin: "10%",
+          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
+        }}
       >
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly"
+          }}
+        >
           <AuthBox />
+          {/* <img
+            style={{
+              maxWidth: "50%",
+              filter: "invert(100%)"
+            }}
+            src={stockArt}
+          /> */}
         </div>
-        <img />
       </div>
     </div>
-  </>);
+  );
 }
 
 const AuthBox = () => {
@@ -26,74 +48,122 @@ const AuthBox = () => {
   const authState = (loginOn)
     ? <LoginCard />
     : <RegistrationCard />;
-  return (<>
-    <ToggleBar 
-      loginOn={loginOn}
-      setLoginOn={setLoginOn}
-    />
-    {authState}
-  </>);
+  return (
+    <div
+      width="50%"
+      style={{
+        boxShadow: "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
+        borderRadius: "9px",
+        width: "70%",
+        maxWidth: "400px",
+        height: ""
+      }}
+    >
+      <ToggleBar 
+        loginOn={loginOn}
+        setLoginOn={setLoginOn}
+      />
+      {authState}
+    </div>
+  );
 };
 
 const ToggleBar = ({loginOn, setLoginOn}) => {
-  return (<>
-    <button onClick={() => setLoginOn(!loginOn)}>
-      Click me!
+  const buttonStyle = {
+    width: "50%",
+    height: "40px",
+    border: "0px",
+    borderRadius: "9px 9px 0 0",
+    fontSize: "1.2rem"
+  };
+  const onStyle = {
+    ...buttonStyle,
+    backgroundColor: "white",
+  };
+  const offStyle = {
+    ...buttonStyle,
+    backgroundColor: "lightgray",
+  };
+  return (<div>
+    <button
+      style={loginOn ? onStyle : offStyle}
+      onClick={() => setLoginOn(true)}
+    >
+      Login
     </button>
-  </>);
+    <button
+      style={loginOn ? offStyle : onStyle}
+      onClick={() => setLoginOn(false)}
+    >
+      Register
+    </button>
+    {/* <button onClick={() => setLoginOn(!loginOn)}>
+      Toggle
+    </button> */}
+  </div>);
 };
 
 // WARNING PSUEDOCODE AHEAD
 
 const LoginCard = () => {
-  username, setUsername = useState
-  password, setPassword = useState
-  function submitData {
-    const submitObject ={
-      // fill in based on POST api
-      username: username,
-      password: password
-    }
-    axios.post('group8awesomeproject.com/Login.php', submitObject);
-    .then((response) => {
-      switch (response.data.code) {
-        case 200:
-          Yay! Switch page
-        case 401:
-          display error message
-      }
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
+
+  const handleChange = (e, key) => {
+    setCredentials({
+      ...credentials,
+      [key]: e.target.value
     });
   }
-  return (<>
+
+  return (
+  <div>
+    <h2>Welcome back</h2>
     <form
-      isActive
+      style={{
+        display: "flex",
+        flexDirection: "column"
+      }}
     >
+      <label>
+        Username
+        <input
+          value={credentials.username}
+          onChange={e => handleChange(e, 'username')}
+        />
+      </label>
+      <label>
+        Password
+        <input type="text" name="name" />
+      </label>
+      <input type="submit" value="Submit" />
     </form>
-    <p>{string}</p>
-    button onClick, submitData
-  </>);
+  </div>);
 };
 
 const RegistrationCard = () => {
-  function submitData {
-    const submitObject ={
-      // fill in based on POST api
-      username: username,
-      password: password,
-      name: name,
-      email: email
-    }
-    axios.post('group8awesomeproject.com/Login.php', submitObject);
-    .then((response) => {
-      switch (response.data.code) {
-        case 200:
-          Yay! Switch page
-        case 401:
-          display error message
-      }
-    });
-  }
+  // function submitData {
+  //   const submitObject ={
+  //     // fill in based on POST api
+  //     username: username,
+  //     password: password,
+  //     name: name,
+  //     email: email
+  //   }
+  //   axios.post('group8awesomeproject.com/Login.php', submitObject);
+  //   .then((response) => {
+  //     switch (response.data.code) {
+  //       case 200:
+  //         Yay! Switch page
+  //       case 401:
+  //         display error message
+  //     }
+  //   });
+  // }
   return (<>
+    <h2>Create a new account</h2>
     <p>Registration</p>
   </>);
 };
