@@ -4,6 +4,7 @@ import AuthPage from './AuthPage.js';
 import DisplayPage from './DisplayPage.js';
 
 const App = () => {
+  
   return (<>
     <Router>
       <Routes>
