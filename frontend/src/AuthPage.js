@@ -10,34 +10,36 @@ const AuthPage = (props) => {
   return (
     <div
       style={{
-        width: "100vw",
-        height: "100vh",
+        // width: "100vw",
+        // height: "100vh",
         backgroundColor: "white"
       }}
     >
-      {/*Inner box*/}
+      {/*Inner box holding AuthBox and side image.*/}
       <div
         style={{
           height: "80vh",
           margin: "10%",
-          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
+          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly"
-          }}
-        >
           <AuthBox />
-          {/* <img
-            style={{
-              maxWidth: "50%",
-              filter: "invert(100%)"
-            }}
-            src={stockArt}
-          /> */}
-        </div>
+          <div>
+            {/* Picture. */}
+            <img src={stockArt}
+              alt="Generic business pic."
+              style={{
+                objectFit: "fill",
+                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                // Below attributes helps keep size same when scaling browser.
+                maxWidth: "100%",
+                maxHeight: "100%",
+                // height: "auto"
+              }}>
+              </img>
+          </div>
       </div>
     </div>
   );
@@ -51,14 +53,22 @@ const AuthBox = () => {
     : <RegistrationCard />;
   return (
     <div
+      style={{
+        height: "75vh",
+        display: "flex",
+        justifyContent:'center', 
+        alignItems:'center'
+      }}
+      >
+    {/* Sign in box. */}
+    <div
       width="50%"
       style={{
         boxShadow: "rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",
         borderRadius: "9px",
-        width: "70%",
+        width: "75%",
         maxWidth: "400px",
-        height: ""
-        
+        height: ""   
       }}
     >
       <ToggleBar 
@@ -66,6 +76,7 @@ const AuthBox = () => {
         setLoginOn={setLoginOn}
       />
       {authState}
+    </div>
     </div>
   );
 };
@@ -87,13 +98,7 @@ const ToggleBar = ({loginOn, setLoginOn}) => {
     backgroundColor: "lightgray",
   };
   return (
-  <div
-    style={{
-      // Trying to move box to center.
-      // display: "flex",
-      // justifyContent: "center"
-      color: "red"
-    }}>
+  <div>
     <button
       style={loginOn ? onStyle : offStyle}
       onClick={() => setLoginOn(true)}
