@@ -116,13 +116,31 @@ const LoginCard = () => {
     });
   }
 
+  const [errorMsg, setErrorMsg] = useState({
+    msg: ''
+  });
+
   const handleSubmit = e => {
+    // What is this?
     e.preventDefault();
     console.log('Request object:', credentials);
     axios.post(
       `${baseUrl}/Login.php`,
       credentials)
-      .then(response => console.log(response))
+      .then(response => {
+        if (response.data.error === 'No Records Found') {
+          console.log(response);
+          console.log(response.data.error);
+          setErrorMsg({
+            msg: 'No records with those credentials.'});
+
+          // 'No records with those credentials.'
+        }
+        else {
+          // save response.body to local storage
+          // change view to contact page
+        }
+      })
       .catch(error => console.log(error));
   }
 
@@ -154,6 +172,7 @@ const LoginCard = () => {
         type="submit"
       />
     </form>
+    <h1 style={{color:"red"}}>{errorMsg.msg}</h1>
   </div>);
 };
 
