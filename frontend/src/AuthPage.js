@@ -58,6 +58,7 @@ const AuthBox = () => {
         width: "70%",
         maxWidth: "400px",
         height: ""
+        
       }}
     >
       <ToggleBar 
@@ -135,8 +136,6 @@ const LoginCard = () => {
           console.log(response.data.error);
           setErrorMsg({
             msg: 'No records with those credentials.'});
-
-          // 'No records with those credentials.'
         }
         else {
           // save response.body to local storage
