@@ -73,8 +73,8 @@ const AuthBox = () => {
 const ToggleBar = ({loginOn, setLoginOn}) => {
   const buttonStyle = {
     width: "50%",
-    height: "40px",
-    border: "0px",
+    height: "3rem",
+    border: "0rem",
     borderRadius: "9px 9px 0 0",
     fontSize: "1.2rem"
   };
@@ -86,7 +86,14 @@ const ToggleBar = ({loginOn, setLoginOn}) => {
     ...buttonStyle,
     backgroundColor: "lightgray",
   };
-  return (<div>
+  return (
+  <div
+    style={{
+      // Trying to move box to center.
+      // display: "flex",
+      // justifyContent: "center"
+      color: "red"
+    }}>
     <button
       style={loginOn ? onStyle : offStyle}
       onClick={() => setLoginOn(true)}
