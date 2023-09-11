@@ -128,7 +128,9 @@ const LoginCard = () => {
       `${baseUrl}/Login.php`,
       credentials)
       .then(response => {
-        if (response.data.error === 'No Records Found') {
+        if ((response.data.error === 'No Records Found') && 
+              (credentials.login.length !== 0 || 
+                credentials.password).length !== 0) {
           console.log(response);
           console.log(response.data.error);
           setErrorMsg({
