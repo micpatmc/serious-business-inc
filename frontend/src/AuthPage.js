@@ -4,9 +4,10 @@ import {
 } from 'react';
 import axios from 'axios';
 import stockArt from './images/loginPageArt.jpg';
+import { useNavigate } from 'react-router-dom';
 const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 
-const AuthPage = (props) => {
+const AuthPage = () => {
   return (
     <div
       style={{
@@ -117,6 +118,8 @@ const ToggleBar = ({loginOn, setLoginOn}) => {
 // WARNING PSUEDOCODE AHEAD
 
 const LoginCard = () => {
+  const navigate = useNavigate();
+
   const [credentials, setCredentials] = useState({
     login: '',
     password: ''
@@ -152,6 +155,8 @@ const LoginCard = () => {
         else {
           // save response.body to local storage
           // change view to contact page
+          
+          navigate('/contacts');
         }
       })
       .catch(error => console.log(error));

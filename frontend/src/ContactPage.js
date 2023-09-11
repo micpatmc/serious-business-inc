@@ -1,23 +1,21 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import testContacts from './testContacts.json';
 const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 
 const ContactPage = ({currentUser}) => {
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    axios.get(`${baseUrl}/GetContacts.php`)
-      .then(response => { setContacts(response.body); })
-      .catch(error => console.log(error));
+    // axios.get(`${baseUrl}/GetContacts.php`)
+    //   .then(response => { setContacts(response.body); })
+    //   .catch(error => console.log(error));
+    setContacts(testContacts);
   }, []);
 
   return (<>
     <HeaderBar currentUser={currentUser} />
-    <div
-      style={{
-        padding: "5%"
-      }}
-    >
+    <div>
       <ContactBook contacts={contacts} />
     </div>
   </>);
@@ -26,7 +24,7 @@ const ContactPage = ({currentUser}) => {
 const HeaderBar = ({}) => {
   return (
     <header>
-
+      
     </header>
   );
 };
@@ -52,11 +50,11 @@ const ContactTable = ({}) => {
 };
 
 const Contact = ({}) => {
-  
+
 };
 
 const ProfileIcon = ({contact}) => {
-  const initials = `${contacts.firstName.}`
+  // const initials = `${contacts.firstName.}`
   return (
     <div
       style={{
