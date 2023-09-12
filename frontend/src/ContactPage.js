@@ -3,6 +3,7 @@ import axios from 'axios';
 import testContacts from './testContacts.json';
 import logo from './images/placeholderLogo.png';
 import { useNavigate } from 'react-router-dom';
+import './App.css';
 const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 
 const ContactPage = () => {
@@ -47,6 +48,7 @@ const HeaderBar = ({currentUser}) => {
           margin: "auto"
         }}
       >Contact Manager</h1>
+      <ProfileIcon contact={currentUser} />
       <h3
       >Hello, {currentUser.firstName}</h3>
       <button
@@ -62,48 +64,148 @@ const HeaderBar = ({currentUser}) => {
 };
 
 const ContactBook = ({contacts}) => {
+  const [search, setSearch] = useState('');
+  
+  return (<>
+    <ContactBookHeader
+      search={search}
+      setSearch={setSearch}
+    />
+    <ContactTable
+      contacts={contacts}
+      search={search}
+    />
+  </>);
+};
+
+const ContactBookHeader = ({search, setSearch}) => {
+  return <span>
+    <input
+      type="text"
+      value={search}
+      placeholder="Search contacts"
+      onChange={e => setSearch(e.target.value)}
+    />
+    <button>
+      Add contact
+    </button>
+  </span>;
+};
+
+const ContactTable = ({contacts, search}) => {
+  const contactContainsSearch = (contact) => {
+    return JSON.stringify(contact).includes(search);
+  }
   return (
-    <table>
-      <ContactBookHeader />
-      <ContactTable
-        contacts={contacts}
-      />
+    <table
+      style={{
+        margin: "0 5%",
+        width: "100%"
+      }}
+    >
+      <thead>
+        <tr>
+          <th></th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Phone number</th>
+          <th>Email address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {
+        contacts
+          .filter(contact => contactContainsSearch(contact))
+          .sort((a, b) => a.lastName.charCodeAt(0) - b.lastName.charCodeAt(0))
+          .map(contact => <Contact contact={contact} key={contact.id} />)
+      }
+      </tbody>
     </table>
   );
 };
 
-const ContactBookHeader = ({}) => {
-  return (
-    <thead>
-      <tr>
-        <th></th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Phone number</th>
-        <th>Email address</th>
-      </tr>
-    </thead>
-  )
-};
+const Contact = ({contact, }) => {
+  const [editContact, setEditContact] = useState(contact);
+  const [isEditing, setIsEditing] = useState(false);
 
-const ContactTable = ({contacts}) => {
-  return (
-    <tbody>
-    {
-      contacts.map(contact => <Contact contact={contact} />)
-    }
-    </tbody>
-  );
-};
+  const handleSubmit = e => {
+    e.preventDefault();
+    // axios post EditContact.php
+    setIsEditing(false);
+  };
 
-const Contact = ({contact}) => {
-  return <tr key={contact.id}>
+  const handleChange = (key, e) => {
+    setEditContact({
+      ...editContact,
+      [key]: e.target.value
+    });
+  };
+
+  const editableContact = 
+    <tr>
+      <td>
+        <form id={contact.id} onSubmit={e => handleSubmit(e)} >
+          <input type="hidden" />
+        </form>
+      </td>
+      <td>
+        <input required
+          form={contact.id}
+          value={editContact.firstName}
+          onChange={e => handleChange('firstName', e)}
+        />
+      </td>
+      <td>
+        <input required
+          form={contact.id}
+          value={editContact.lastName}
+          onChange={e => handleChange('lastName', e)}
+        />
+        </td>
+      <td>
+        <input required
+          form={contact.id}
+          value={editContact.phoneNumber}
+          onChange={e => handleChange('phoneNumber', e)}
+        />
+        </td>
+      <td>
+        <input required
+          form={contact.id}
+          value={editContact.emailAddress}
+          onChange={e => handleChange('emailAddress', e)}
+        />
+      </td>
+      <td>
+        <input
+          form={contact.id}
+          type="submit"
+        />
+        <button
+          onClick={() => setIsEditing(false)}
+        >
+          Cancel
+        </button>
+      </td>
+    </tr>;
+  return !isEditing ? <tr>
     <td><ProfileIcon contact={contact} /></td>
     <td>{contact.firstName}</td>
     <td>{contact.lastName}</td>
     <td>{contact.phoneNumber}</td>
     <td>{contact.emailAddress}</td>
-  </tr>
+    <td>
+      <button
+        onClick={() => setIsEditing(true)}
+      >
+        Edit
+      </button>
+      <button>
+        Delete
+      </button>
+    </td>
+  </tr> : editableContact;
 };
 
 const ProfileIcon = ({contact}) => {
@@ -115,7 +217,11 @@ const ProfileIcon = ({contact}) => {
         height: "3rem",
         width: "3rem",
         borderRadius: "1.5rem",
-        backgroundColor: "lightblue"
+        backgroundColor: "lightblue",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "1.2rem"
       }}
     >
       <p><b>{initials}</b></p>
