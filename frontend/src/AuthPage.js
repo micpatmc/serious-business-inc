@@ -180,6 +180,7 @@ const LoginCard = () => {
       <label>
         Password
         <input
+          type="password"
           value={credentials.password}
           onChange={e => handleChange(e, 'password')}
         />
@@ -252,6 +253,7 @@ const RegistrationCard = () => {
       <label>
         Password
         <input
+          type="password"
           value={newUser.password}
           onChange={e => handleChange(e, 'password')}
         />
