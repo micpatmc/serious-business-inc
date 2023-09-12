@@ -155,7 +155,8 @@ const LoginCard = () => {
         else {
           // save response.body to local storage
           // change view to contact page
-          
+          sessionStorage.setItem('currentUser', JSON.stringify(response.data))
+          console.log(JSON.parse(sessionStorage.getItem('currentUser')));
           navigate('/contacts');
         }
       })
