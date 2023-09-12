@@ -1,5 +1,5 @@
 <?php
-
+// need to check if the contact already exists
 $inData = getRequestInfo();
 
 $conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
