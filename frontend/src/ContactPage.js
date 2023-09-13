@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import testContacts from './testContacts.json';
-import logo from './images/placeholderLogo.png';
+import logo from './images/largeLogo.png';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
@@ -37,11 +37,13 @@ const HeaderBar = ({currentUser}) => {
         display: "flex",
         flexDirection: "row",
         height: "8vh",
-        backgroundColor: "gray"
+        backgroundColor: "gray",
+        alignItems: "center"
       }}
     >
       <img
         src={logo}
+        height="100%"
       />
       <h1
         style={{
@@ -62,41 +64,25 @@ const HeaderBar = ({currentUser}) => {
     </header>
   );
 };
-
 const ContactBook = ({contacts}) => {
   const [search, setSearch] = useState('');
-  
-  return (<>
-    <ContactBookHeader
-      search={search}
-      setSearch={setSearch}
-    />
-    <ContactTable
-      contacts={contacts}
-      search={search}
-    />
-  </>);
-};
 
-const ContactBookHeader = ({search, setSearch}) => {
-  return <span>
-    <input
-      type="text"
-      value={search}
-      placeholder="Search contacts"
-      onChange={e => setSearch(e.target.value)}
-    />
-    <button>
-      Add contact
-    </button>
-  </span>;
-};
-
-const ContactTable = ({contacts, search}) => {
   const contactContainsSearch = (contact) => {
     return JSON.stringify(contact).includes(search);
   }
-  return (
+
+  return (<>
+    <span>
+      <input
+        type="text"
+        value={search}
+        placeholder="Search contacts"
+        onChange={e => setSearch(e.target.value)}
+      />
+      <button>
+        Add contact
+      </button>
+    </span>
     <table
       style={{
         margin: "0 5%",
@@ -122,7 +108,7 @@ const ContactTable = ({contacts, search}) => {
       }
       </tbody>
     </table>
-  );
+  </>);
 };
 
 const Contact = ({contact, }) => {
