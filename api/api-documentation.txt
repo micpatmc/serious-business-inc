@@ -88,7 +88,7 @@ paths:
     post:
       tags:
       - Search
-      summary: Searches for contact
+      summary: Searches for contacts
       operationId: searchContacts
       description: Searches for contacts in the database
       consumes:
@@ -97,10 +97,34 @@ paths:
       - application/json
       parameters:
       - in: body
-        name: searchUser
+        name: searchContacts
         description: Contacts Search
         schema:
           $ref: '#/definitions/SearchContacts'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /DeleteContact.php:
+    post:
+      tags:
+      - Search
+      summary: Deletes a contact
+      operationId: deleteContact
+      description: Deletes a contact in the database
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: deleteContact
+        description: Contact Delete
+        schema:
+          $ref: '#/definitions/DeleteContact'
       responses:
         200:
           description: OK
@@ -167,10 +191,13 @@ definitions:
   SearchContacts:
     type: object
     required:
-    - userId
-    - search
+    - id
+    - firstName
+    - lastName
+    - phoneNumber
+    - emailAddress
     properties:
-      id:
+      userId:
         type: integer
         example: 0
       firstName:
@@ -185,6 +212,16 @@ definitions:
       emailAddress:
         type: string
         example: "foo@bar.com"
+  DeleteContact:
+    type: object
+    required:
+    - id
+    - firstName
+    - lastName
+    properties:
+      userId:
+        type: integer
+        example: 0
 
 host: COP4331-5.com
 basePath: /LAMPAPI
