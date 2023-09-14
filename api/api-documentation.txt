@@ -84,15 +84,13 @@ paths:
           description: URL Not Found 
         500:
           description: Server Error
-  
-  #search section, needs editing
-  /SearchUser.php:
+  /SearchContacts.php:
     post:
       tags:
       - Search
-      summary: Searches for user
-      operationId: searchUser
-      description: Searches for a user in the database
+      summary: Searches for contact
+      operationId: searchContacts
+      description: Searches for contacts in the database
       consumes:
       - application/json
       produces:
@@ -100,9 +98,9 @@ paths:
       parameters:
       - in: body
         name: searchUser
-        description: User Search
+        description: Contacts Search
         schema:
-          $ref: '#/definitions/Search'
+          $ref: '#/definitions/SearchContacts'
       responses:
         200:
           description: OK
@@ -166,18 +164,27 @@ definitions:
       Phone:
         type: integer
         example: 112223333
-  Search:
+  SearchContacts:
     type: object
     required:
     - userId
     - search
     properties:
-      userId:
+      id:
         type: integer
-        example: 1
-      search:
+        example: 0
+      firstName:
         type: string
-        example: "bl"
+        example: "John"
+      lastName:
+        type: string
+        example: "Smith"
+      phoneNumber:
+        type: string
+        example: "1234567890"
+      emailAddress:
+        type: string
+        example: "foo@bar.com"
 
 host: COP4331-5.com
 basePath: /LAMPAPI
