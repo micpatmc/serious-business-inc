@@ -3,7 +3,10 @@ import axios from 'axios';
 import testContacts from './testContacts.json';
 import logo from './images/largeLogo.png';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+import {
+  MdOutlineExitToApp
+} from 'react-icons/md';
+import './ContactPage.css';
 const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 
 const ContactPage = () => {
@@ -11,16 +14,16 @@ const ContactPage = () => {
   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
   useEffect(() => {
-    // axios.get(`${baseUrl}/GetContacts.php`)
-    //   .then(response => { setContacts(response.body); })
-    //   .catch(error => console.log(error));
+    axios.post(`${baseUrl}/SearchContacts.php`)
+      .then(response => { setContacts(response.body); })
+      .catch(error => console.log(error));
     setContacts(testContacts);
   }, []);
 
-  return (<>
+  return (<div className="main">
     <HeaderBar currentUser={currentUser} />
     <ContactBook contacts={contacts} />
-  </>);
+  </div>);
 };
 
 const HeaderBar = ({currentUser}) => {
@@ -32,18 +35,10 @@ const HeaderBar = ({currentUser}) => {
   }
   
   return (
-    <header
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        height: "8vh",
-        backgroundColor: "gray",
-        alignItems: "center"
-      }}
-    >
+    <header>
       <img
+        className="header-logo"
         src={logo}
-        height="100%"
       />
       <h1
         style={{
@@ -54,12 +49,13 @@ const HeaderBar = ({currentUser}) => {
       <h3
       >Hello, {currentUser.firstName}</h3>
       <button
-        style={{
-          marginLeft: "auto"
-        }}
+        className="log-out button-4"
         onClick={logOut}
       >
-        Log out
+        <MdOutlineExitToApp
+          size="2em"
+        />
+        <h3 style={{marginBlock: 0}}>Log out</h3>
       </button>
     </header>
   );
@@ -71,9 +67,10 @@ const ContactBook = ({contacts}) => {
     return JSON.stringify(contact).includes(search);
   }
 
-  return (<>
+  return (<main>
     <span>
       <input
+        className="searchBar"
         type="text"
         value={search}
         placeholder="Search contacts"
@@ -83,12 +80,7 @@ const ContactBook = ({contacts}) => {
         Add contact
       </button>
     </span>
-    <table
-      style={{
-        margin: "0 5%",
-        width: "100%"
-      }}
-    >
+    <table>
       <thead>
         <tr>
           <th></th>
@@ -108,7 +100,7 @@ const ContactBook = ({contacts}) => {
       }
       </tbody>
     </table>
-  </>);
+  </main>);
 };
 
 const Contact = ({contact, }) => {
@@ -169,6 +161,7 @@ const Contact = ({contact, }) => {
           type="submit"
         />
         <button
+          className="button-4"
           onClick={() => setIsEditing(false)}
         >
           Cancel
@@ -184,10 +177,13 @@ const Contact = ({contact, }) => {
     <td>
       <button
         onClick={() => setIsEditing(true)}
+          className="button-4"
       >
         Edit
       </button>
-      <button>
+      <button
+          className="button-4"
+      >
         Delete
       </button>
     </td>
@@ -200,14 +196,14 @@ const ProfileIcon = ({contact}) => {
   return (
     <div
       style={{
-        height: "3rem",
-        width: "3rem",
-        borderRadius: "1.5rem",
+        height: "2.5em",
+        width: "2.5em",
+        borderRadius: "1.5em",
         backgroundColor: "lightblue",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "1.2rem"
+        fontSize: "1.2em"
       }}
     >
       <p><b>{initials}</b></p>
