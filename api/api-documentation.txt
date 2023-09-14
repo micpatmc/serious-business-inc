@@ -108,23 +108,23 @@ paths:
           description: URL Not Found
         500:
           description: Server Error
-  /DeleteContact.php:
+  /DeleteContacts.php:
     post:
       tags:
       - Search
-      summary: Deletes a contact
-      operationId: deleteContact
-      description: Deletes a contact in the database
+      summary: Deletes contacts
+      operationId: deleteContacts
+      description: Deletes contacts in the database
       consumes:
       - application/json
       produces:
       - application/json
       parameters:
       - in: body
-        name: deleteContact
-        description: Contact Delete
+        name: deleteContacts
+        description: Contacts Delete
         schema:
-          $ref: '#/definitions/DeleteContact'
+          $ref: '#/definitions/DeleteContacts'
       responses:
         200:
           description: OK
@@ -132,7 +132,6 @@ paths:
           description: URL Not Found
         500:
           description: Server Error
-
 
 definitions:
   Login:
@@ -212,14 +211,16 @@ definitions:
       emailAddress:
         type: string
         example: "foo@bar.com"
-  DeleteContact:
+  DeleteContacts:
     type: object
     required:
+    - userId
     - id
-    - firstName
-    - lastName
     properties:
       userId:
+        type: integer
+        example: 0
+      id:
         type: integer
         example: 0
 
