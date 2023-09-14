@@ -5,11 +5,11 @@
 	$searchResults = "";
 	$searchCount = 0;
 
-	$id = $inData["id"];
+	$id = $inData["userId"];
 	$firstName = $inData["firstName"];
 	$lastName = $inData["lastName"];
-	$phoneNumber = $inData["phoneNumber"];
-	$emailAddress = $inData["emailAddress"];
+	$phoneNumber = $inData["phone"];
+	$emailAddress = $inData["email"];
 	
 	$conn = new mysqli("localhost", "Itachi", "!COP4331isthebest", "COP4331");
 	if ($conn->connect_error) 
