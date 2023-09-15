@@ -1,27 +1,34 @@
 <?php
-// need to check if the contact already exists
 $inData = getRequestInfo();
 
 $conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
 if ($conn->connect_error) 
 {
     returnWithError($conn->connect_error);
-} else 
+} 
+else 
 {
     $firstName = $inData["FirstName"];
     $lastName = $inData["LastName"];
     $email = $inData["Email"];
     $phoneNumber = $inData["Phone"];
     $userId = $inData["UserId"];
+
+    // You need to prepare the statement before executing it.
+    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserID=?");
+    $stmt->bind_param("s", $userId);
+    $stmt->execute();
     $result = $stmt->get_result();
-	
+    
+    // Now, you check if a row was returned.
     if($row = $result->fetch_assoc())
-	{
-		http_response_code(409); 
-		returnWithError("User already exits");
-	}
+    {
+        http_response_code(409); 
+        returnWithError("User already exists");
+    }
     else
     {
+        // Prepare the INSERT statement.
         $stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Email, PhoneNumber, UserID) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $userId);
         $stmt->execute();
@@ -48,5 +55,5 @@ function returnWithError($err)
     $retValue = '{"error":"' . $err . '"}';
     sendResultInfoAsJson($retValue);
 }
-
 ?>
+
