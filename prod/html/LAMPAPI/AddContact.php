@@ -1,39 +1,43 @@
 <?php
+
 $inData = getRequestInfo();
 
-$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
+$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if ($conn->connect_error) 
 {
-    returnWithError($conn->connect_error);
+    returnWithError( $conn->connect_error );
 } 
-else 
+else
 {
-    $id = $inData["ID"];
     $firstName = $inData["FirstName"];
     $lastName = $inData["LastName"];
     $email = $inData["Email"];
     $phoneNumber = $inData["Phone"];
     $userId = $inData["UserId"];
 
-    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE UserId=?");
-    $stmt->bind_param("s", $userId);
+    // Check for duplicates
+    $stmt = $conn->prepare("SELECT * FROM Contact WHERE Email=? AND UserID=?");
+    $stmt->bind_param("ss", $email, $userId);
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    if($row = $result->fetch_assoc())
+
+    if($result->num_rows > 0)
     {
-        http_response_code(409); 
-        returnWithError("User already exists");
+        $stmt->close();
+        $conn->close();
+        returnWithError("Duplicate contact found.");
     }
     else
     {
-        $stmt = $conn->prepare("INSERT INTO Contacts (ID, FirstName, LastName, Email, PhoneNumber, UserId) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $id, $firstName, $lastName, $email, $phoneNumber, $userId);
+        // Insert the contact
+        $stmt = $conn->prepare("INSERT INTO Contact (FirstName, LastName, Email, Phone, UserID) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $userId);
         $stmt->execute();
-    
+
         $stmt->close();
         $conn->close();
-        returnWithError("");
+
+        returnWithInfo("Contact added successfully.");
     }
 }
 
@@ -42,15 +46,22 @@ function getRequestInfo()
     return json_decode(file_get_contents('php://input'), true);
 }
 
-function sendResultInfoAsJson($obj)
+function sendResultInfoAsJson( $obj )
 {
     header('Content-type: application/json');
     echo $obj;
 }
 
-function returnWithError($err)
+function returnWithError( $err )
 {
-    $retValue = '{"error":"' . $err . '"}';
-    sendResultInfoAsJson($retValue);
+    $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+    sendResultInfoAsJson( $retValue );
 }
+
+function returnWithInfo( $info )
+{
+    $retValue = '{"results":' . json_encode($info) . ',"error":""}';
+    sendResultInfoAsJson( $retValue );
+}
+
 ?>
