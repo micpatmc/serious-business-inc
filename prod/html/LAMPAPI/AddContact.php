@@ -11,13 +11,13 @@ else
 {
     $firstName = $inData["FirstName"];
     $lastName = $inData["LastName"];
-    $email = $inData["Email"];
+    $emailAddress = $inData["Email"];
     $phoneNumber = $inData["Phone"];
-    $userId = $inData["UserId"];
+    $userId = $inData["UserID"];
 
     // Check for duplicates
     $stmt = $conn->prepare("SELECT * FROM Contact WHERE Email=? AND UserID=?");
-    $stmt->bind_param("ss", $email, $userId);
+    $stmt->bind_param("ss", $emailAddress, $userId);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -31,7 +31,7 @@ else
     {
         // Insert the contact
         $stmt = $conn->prepare("INSERT INTO Contact (FirstName, LastName, Email, Phone, UserID) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $userId);
+        $stmt->bind_param("sssss", $firstName, $lastName, $emailAddress, $phoneNumber, $userId);
         $stmt->execute();
 
         $stmt->close();
