@@ -7,7 +7,9 @@ const baseUrl = "http://seriousbusinessincorporated.online/LAMPAPI";
 
 const AuthPage = () => {
   return (
-    /*Inner box holding AuthBox and side image.*/
+    <div
+    >
+    {/*Inner box holding AuthBox and side image.*/}
     <div
       id="AuthPage-home"
       className="grid text-center rounded shadow-lg mb-5 rounded"
@@ -21,6 +23,7 @@ const AuthPage = () => {
           alt="Generic business pic."
         ></img>
       </div>
+    </div>
     </div>
   );
 };
@@ -90,10 +93,7 @@ const LoginCard = () => {
     });
   };
 
-  const [errorMsg, setErrorMsg] = useState({
-    msg: "",
-  });
-
+  const [showError, setShowError] = useState(false);
   const handleSubmit = (e) => {
     // What is this?
     e.preventDefault();
@@ -101,15 +101,15 @@ const LoginCard = () => {
     axios
       .post(`${baseUrl}/Login.php`, credentials)
       .then((response) => {
+        // No record found
         if (
           response.data.error === "No Records Found" &&
-          (credentials.login.length !== 0 || credentials.password).length !== 0
+          credentials.login.length !== 0 &&
+          credentials.password.length !== 0
         ) {
           console.log(response);
           console.log(response.data.error);
-          setErrorMsg({
-            msg: "No records with those credentials.",
-          });
+          setShowError(true);
         } else {
           sessionStorage.setItem("currentUser", JSON.stringify(response.data));
           navigate("/contacts");
@@ -121,15 +121,7 @@ const LoginCard = () => {
   return (
     <div>
       <h2 className="mt-4">Welcome back</h2>
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        style={
-          {
-            // display: "flex",
-            // flexDirection: "column",
-          }
-        }
-      >
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="form-group row m-5">
           <label for="username" className="col-sm-2 col-form-label">
             Username
@@ -142,6 +134,7 @@ const LoginCard = () => {
               placeholder="Username"
               value={credentials.login}
               onChange={(e) => handleChange(e, "login")}
+              required
             />
           </div>
         </div>
@@ -157,13 +150,31 @@ const LoginCard = () => {
               placeholder="Password"
               value={credentials.password}
               onChange={(e) => handleChange(e, "password")}
+              required
             />
           </div>
         </div>
-        <input type="submit" className="btn btn-secondary"/>
+        <input type="submit" className="btn btn-secondary" />
       </form>
-      <h1 style={{ color: "red" }}>{errorMsg.msg}</h1>
+      <div hidden={!showError}>
+      <div class="alert alert-danger d-flex align-items-center m-4" role="alert">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="red"
+          class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+          viewBox="0 0 16 16"
+          role="img"
+          aria-label="Warning:"
+        >
+          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <div>No Records with those credentials found.</div>
+      </div>
+      </div>
     </div>
+    //<h1 style={{ color: "red" }}>{errorMsg.msg}</h1>
   );
 };
 
@@ -193,45 +204,74 @@ const RegistrationCard = () => {
 
   return (
     <div>
-      <h2>Create a new account</h2>
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <label>
-          First Name
-          <input
-            value={newUser.FirstName}
-            onChange={(e) => handleChange(e, "FirstName")}
-          />
-        </label>
-        <label>
-          Last Name
-          <input
-            value={newUser.LastName}
-            onChange={(e) => handleChange(e, "LastName")}
-          />
-        </label>
+      <h2 className="mt-4">Create a new account</h2>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div className="form-group row m-4">
+          <label for="firstName" className="col-sm-2 col-form-label">
+            First Name
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="firstName"
+              placeholder="First Name"
+              value={newUser.FirstName}
+              onChange={(e) => handleChange(e, "FirstName")}
+              required
+            />
+          </div>
+        </div>
+        <div className="form-group row m-4">
+          <label for="lastName" className="col-sm-2 col-form-label">
+            Last Name
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="text"
+              className="form-control"
+              id="lastName"
+              placeholder="Last Name"
+              value={newUser.LastName}
+              onChange={(e) => handleChange(e, "LastName")}
+              required
+            />
+          </div>
+        </div>
         <hr />
-        <label>
-          Username
-          <input
-            value={newUser.userId}
-            onChange={(e) => handleChange(e, "userId")}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={newUser.password}
-            onChange={(e) => handleChange(e, "password")}
-          />
-        </label>
-        <input type="submit" />
+        <div className="form-group row m-4">
+          <label for="username" className="col-sm-2 col-form-label">
+            Username
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="username"
+              className="form-control"
+              id="username"
+              placeholder="Username"
+              value={newUser.userId}
+              onChange={(e) => handleChange(e, "userId")}
+              required
+            />
+          </div>
+        </div>
+        <div className="form-group row m-4">
+          <label for="password" className="col-sm-2 col-form-label">
+            Password
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="password"
+              className="form-control"
+              id="inputPassword"
+              placeholder="Password"
+              value={newUser.password}
+              onChange={(e) => handleChange(e, "password")}
+              required
+            />
+          </div>
+        </div>
+        <input type="submit" className="btn btn-secondary" />
       </form>
     </div>
   );
