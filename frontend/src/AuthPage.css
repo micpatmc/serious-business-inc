@@ -1,10 +1,29 @@
 #AuthPage-home {
     margin: 10rem;
-    background-color: #272829;
+    background-color: #61677A;
+}
+
+#AuthPage-home-authrow {
+  height: 100ch;
 }
 
 #AuthPage-home-authbox {
-    
-
+  height: 35vh;
+  margin: 10rem;
 }
 
+#auth-button-style {
+    width: 50%;
+    height: 3rem;
+    border: 0rem;
+    border-radius: 9px 9px 0 0;
+    font-size: 1.2rem;
+  }
+
+#auth-button-onStyle {
+background-color: white;
+}
+
+#auth-button-offStyle {
+background-color: lightgray;
+}

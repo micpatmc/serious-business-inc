@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import "./AuthPage.css"
+import "./AuthPage.css";
 import axios from "axios";
 import stockArt from "./images/login_page.jpg";
 import { useNavigate } from "react-router-dom";
@@ -7,23 +7,21 @@ const baseUrl = "http://seriousbusinessincorporated.online/LAMPAPI";
 
 const AuthPage = () => {
   return (
-      /*Inner box holding AuthBox and side image.*/
-      <div
-          id="AuthPage-home"
-          className="grid text-center rounded shadow-lg p-3 mb-5 bg-body-tertiary rounded"
-      >
-        <div className="row align-items-center">
-          <AuthBox className="col"/>
-          <div className="col">
-            {/* Picture. */}
-            <img
-              src={stockArt}
-              className="img-fluid"
-              alt="Generic business pic."
-            ></img>
-          </div>
-        </div>
+    /*Inner box holding AuthBox and side image.*/
+    <div
+      id="AuthPage-home"
+      className="grid text-center rounded shadow-lg mb-5 rounded"
+    >
+      <div id="AuthPage-home-authrow" className="row align-items-center">
+        <AuthBox />
+        {/* Picture. */}
+        <img
+          src={stockArt}
+          className="col img-fluid"
+          alt="Generic business pic."
+        ></img>
       </div>
+    </div>
   );
 };
 
@@ -35,7 +33,7 @@ const AuthBox = () => {
     // Login/Register box.
     <div
       id="AuthPage-home-authbox"
-      className="col shadow-lg p-3 mb-5 bg-body-tertiary rounded"
+      className="col shadow-lg p-3 bg-body-tertiary rounded"
     >
       <ToggleBar loginOn={loginOn} setLoginOn={setLoginOn} />
       {authState}
@@ -76,8 +74,6 @@ const ToggleBar = ({ loginOn, setLoginOn }) => {
     </div>
   );
 };
-
-// WARNING PSUEDOCODE AHEAD
 
 const LoginCard = () => {
   const navigate = useNavigate();
@@ -124,30 +120,47 @@ const LoginCard = () => {
 
   return (
     <div>
-      <h2>Welcome back</h2>
+      <h2 className="mt-4">Welcome back</h2>
       <form
         onSubmit={(e) => handleSubmit(e)}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
+        style={
+          {
+            // display: "flex",
+            // flexDirection: "column",
+          }
+        }
       >
-        <label>
-          Username
-          <input
-            value={credentials.login}
-            onChange={(e) => handleChange(e, "login")}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={credentials.password}
-            onChange={(e) => handleChange(e, "password")}
-          />
-        </label>
-        <input type="submit" />
+        <div className="form-group row m-5">
+          <label for="username" className="col-sm-2 col-form-label">
+            Username
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="username"
+              className="form-control"
+              id="username"
+              placeholder="Username"
+              value={credentials.login}
+              onChange={(e) => handleChange(e, "login")}
+            />
+          </div>
+        </div>
+        <div className="form-group row m-5">
+          <label for="inputPassword" className="col-sm-2 col-form-label">
+            Password
+          </label>
+          <div className="col-sm-10">
+            <input
+              type="password"
+              className="form-control"
+              id="inputPassword"
+              placeholder="Password"
+              value={credentials.password}
+              onChange={(e) => handleChange(e, "password")}
+            />
+          </div>
+        </div>
+        <input type="submit" className="btn btn-secondary"/>
       </form>
       <h1 style={{ color: "red" }}>{errorMsg.msg}</h1>
     </div>
