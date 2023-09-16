@@ -1,29 +1,45 @@
 import { React, useState } from "react";
 import "./AuthPage.css";
 import axios from "axios";
-import stockArt from "./images/login_page.jpg";
+import stockArt from "./images/login_page_image1.png";
+import businessLogo from "./images/largeLogo.png";
 import { useNavigate } from "react-router-dom";
 const baseUrl = "http://seriousbusinessincorporated.online/LAMPAPI";
 
 const AuthPage = () => {
   return (
     <div
-    >
-    {/*Inner box holding AuthBox and side image.*/}
-    <div
       id="AuthPage-home"
-      className="grid text-center rounded shadow-lg mb-5 rounded"
     >
-      <div id="AuthPage-home-authrow" className="row align-items-center">
-        <AuthBox />
-        {/* Picture. */}
-        <img
-          src={stockArt}
-          className="col img-fluid"
-          alt="Generic business pic."
-        ></img>
+      <nav id="AuthPage-nav" class="navbar-dark">
+        <div class="container-fluid">
+            <img
+              src={businessLogo}
+              alt="Serious Business Incorporated"
+              width="270"
+              height="90"
+            ></img>
+        </div>
+      </nav>
+      <div id="AuthPage-outerbox">
+        {/*Inner box holding AuthBox and side image.*/}
+        <div
+          id="AuthPage-home-innerbox"
+          className="grid text-center rounded shadow-lg mb-5 rounded"
+        >
+          <div id="AuthPage-home-authrow" className="row align-items-center">
+            <AuthBox />
+            {/* Picture. */}
+            <div id="#AuthPage-home-authbox" className="col">
+              <img
+                className="img-fluid"
+                src={stockArt}
+                alt="Generic business pic."
+              ></img>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
@@ -36,7 +52,7 @@ const AuthBox = () => {
     // Login/Register box.
     <div
       id="AuthPage-home-authbox"
-      className="col shadow-lg p-3 bg-body-tertiary rounded"
+      className="col shadow-lg rounded"
     >
       <ToggleBar loginOn={loginOn} setLoginOn={setLoginOn} />
       {authState}
@@ -157,21 +173,24 @@ const LoginCard = () => {
         <input type="submit" className="btn btn-secondary" />
       </form>
       <div hidden={!showError}>
-      <div class="alert alert-danger d-flex align-items-center m-4" role="alert">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="red"
-          class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
-          viewBox="0 0 16 16"
-          role="img"
-          aria-label="Warning:"
+        <div
+          class="alert alert-danger d-flex align-items-center m-4"
+          role="alert"
         >
-          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-        </svg>
-        <div>No Records with those credentials found.</div>
-      </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="red"
+            class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+            viewBox="0 0 16 16"
+            role="img"
+            aria-label="Warning:"
+          >
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+          </svg>
+          <div>No Records with those credentials found.</div>
+        </div>
       </div>
     </div>
     //<h1 style={{ color: "red" }}>{errorMsg.msg}</h1>
