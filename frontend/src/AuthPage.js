@@ -21,13 +21,8 @@ const AuthPage = () => {
             ></img>
         </div>
       </nav>
-      <div id="AuthPage-outerbox">
-        {/* <div
-          id="AuthPage-home-innerbox"
-          className="grid text-center rounded shadow-lg rounded"
-        > */}
           {/*Inner box holding AuthBox and side image.*/}
-          <div id="AuthPage-home-authrow" className="row align-items-center grid text-center rounded shadow-lg rounded">
+          <div id="AuthPage-home-authrow" className="row align-items-center grid text-center rounded shadow-lg m-5">
             <AuthBox />
             {/* Picture. */}
             <div id="#AuthPage-home-authbox" className="col">
@@ -38,8 +33,6 @@ const AuthPage = () => {
               ></img>
             </div>
           </div>
-        {/* </div> */}
-      </div>
     </div>
   );
 };
@@ -142,10 +135,10 @@ const LoginCard = () => {
         className=""
         onSubmit={(e) => handleSubmit(e)}>
         <div className="form-group row m-4">
-          <label for="username" className="col-sm-2 col-form-label">
+          <label for="username" className="col-sm-3 col-form-label">
             Username
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm-8">
             <input
               type="username"
               className="form-control form-control-md w-50"
@@ -158,10 +151,10 @@ const LoginCard = () => {
           </div>
         </div>
         <div className="form-group row m-4">
-          <label for="inputPassword" className="col-sm-2 col-form-label">
+          <label for="inputPassword" className="col-sm-3 col-form-label">
             Password
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm-8">
             <input
               type="password"
               className="form-control form-control-md w-50"
@@ -228,11 +221,11 @@ const RegistrationCard = () => {
     <div>
       <h2 className="mt-4 pb-4">Create a new account</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className="form-group row m-4">
-          <label for="firstName" className="col-sm-2 col-form-label">
+        <div className="form-group row m-2">
+          <label for="firstName" className="col-sm-3 col-form-label">
             First Name
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm-8">
             <input
               type="text"
               className="form-control form-control-md w-50"
@@ -244,11 +237,11 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row m-4">
-          <label for="lastName" className="col-sm-2 col-form-label">
+        <div className="form-group row m-2">
+          <label for="lastName" className="col-sm-3 col-form-label">
             Last Name
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm-8">
             <input
               type="text"
               className="form-control form-control-md w-50"
@@ -261,11 +254,11 @@ const RegistrationCard = () => {
           </div>
         </div>
         <hr />
-        <div className="form-group row m-4">
-          <label for="username" className="col-sm-2 col-form-label">
+        <div className="form-group row m-2">
+          <label for="username" className="col-sm-3 col-form-label">
             Username
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm-8">
             <input
               type="username"
               className="form-control form-control-md w-50"
@@ -277,11 +270,11 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row m-4">
-          <label for="password" className="col-sm-2 col-form-label">
+        <div className="form-group row m-2">
+          <label for="password" className="col-sm-3 col-form-label">
             Password
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm-8">
             <input
               type="password"
               className="form-control form-control-md w-50"
