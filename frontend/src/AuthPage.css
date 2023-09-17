@@ -22,6 +22,7 @@
 
 #AuthPage-home-authrow {
   /* margin: 25rem; */
+  background-color: #FFF6E0;
   margin: 0;
   padding: 0 5rem;
 }
@@ -51,6 +52,10 @@ background-color: white;
 
 #auth-button-offStyle {
 background-color: lightgray;
+}
+
+.form-outline {
+  
 }
 
 /* Shadow color of input fields when you click on them. */

@@ -22,12 +22,12 @@ const AuthPage = () => {
         </div>
       </nav>
       <div id="AuthPage-outerbox">
-        <div
+        {/* <div
           id="AuthPage-home-innerbox"
-          className="grid text-center rounded shadow-lg mb-5 rounded"
-        >
+          className="grid text-center rounded shadow-lg rounded"
+        > */}
           {/*Inner box holding AuthBox and side image.*/}
-          <div id="AuthPage-home-authrow" className="row align-items-center">
+          <div id="AuthPage-home-authrow" className="row align-items-center grid text-center rounded shadow-lg rounded">
             <AuthBox />
             {/* Picture. */}
             <div id="#AuthPage-home-authbox" className="col">
@@ -38,7 +38,7 @@ const AuthPage = () => {
               ></img>
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );
@@ -113,7 +113,6 @@ const LoginCard = () => {
 
   const [showError, setShowError] = useState(false);
   const handleSubmit = (e) => {
-    // What is this?
     e.preventDefault();
     console.log("Request object:", credentials);
     axios
@@ -139,15 +138,17 @@ const LoginCard = () => {
   return (
     <div>
       <h2 className="mt-4">Welcome back</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div className="form-group row-auto">
+      <form 
+        className=""
+        onSubmit={(e) => handleSubmit(e)}>
+        <div className="form-group row m-4">
           <label for="username" className="col-sm-2 col-form-label">
             Username
           </label>
-          <div className="col-auto">
+          <div className="col-sm-10">
             <input
               type="username"
-              className="form-control"
+              className="form-control form-control-md w-50"
               id="username"
               placeholder="Username"
               value={credentials.login}
@@ -156,14 +157,14 @@ const LoginCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row-auto">
+        <div className="form-group row m-4">
           <label for="inputPassword" className="col-sm-2 col-form-label">
             Password
           </label>
-          <div className="col-auto">
+          <div className="col-sm-10">
             <input
               type="password"
-              className="form-control"
+              className="form-control form-control-md w-50"
               id="inputPassword"
               placeholder="Password"
               value={credentials.password}
@@ -172,7 +173,7 @@ const LoginCard = () => {
             />
           </div>
         </div>
-        <input type="submit" className="btn btn-secondary" />
+        <input type="submit" className="btn btn-secondary m-3" />
       </form>
       <div hidden={!showError}>
         <div
@@ -225,16 +226,16 @@ const RegistrationCard = () => {
 
   return (
     <div>
-      <h2 className="mt-4">Create a new account</h2>
+      <h2 className="mt-4 pb-4">Create a new account</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className="form-group row-auto">
+        <div className="form-group row m-4">
           <label for="firstName" className="col-sm-2 col-form-label">
             First Name
           </label>
-          <div className="col-auto">
+          <div className="col-sm-10">
             <input
               type="text"
-              className="form-control"
+              className="form-control form-control-md w-50"
               id="firstName"
               placeholder="First Name"
               value={newUser.FirstName}
@@ -243,14 +244,14 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row-auto">
+        <div className="form-group row m-4">
           <label for="lastName" className="col-sm-2 col-form-label">
             Last Name
           </label>
-          <div className="col-auto">
+          <div className="col-sm-10">
             <input
               type="text"
-              className="form-control"
+              className="form-control form-control-md w-50"
               id="lastName"
               placeholder="Last Name"
               value={newUser.LastName}
@@ -260,14 +261,14 @@ const RegistrationCard = () => {
           </div>
         </div>
         <hr />
-        <div className="form-group row-auto">
+        <div className="form-group row m-4">
           <label for="username" className="col-sm-2 col-form-label">
             Username
           </label>
-          <div className="col-auto">
+          <div className="col-sm-10">
             <input
               type="username"
-              className="form-control"
+              className="form-control form-control-md w-50"
               id="username"
               placeholder="Username"
               value={newUser.userId}
@@ -276,14 +277,14 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row-auto">
+        <div className="form-group row m-4">
           <label for="password" className="col-sm-2 col-form-label">
             Password
           </label>
-          <div className="col-auto">
+          <div className="col-sm-10">
             <input
               type="password"
-              className="form-control"
+              className="form-control form-control-md w-50"
               id="inputPassword"
               placeholder="Password"
               value={newUser.password}
@@ -292,7 +293,7 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <input type="submit" className="btn btn-secondary" />
+        <input type="submit" className="btn btn-secondary m-3" />
       </form>
     </div>
   );
