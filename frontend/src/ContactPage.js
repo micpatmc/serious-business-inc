@@ -14,7 +14,7 @@ const ContactPage = () => {
   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
   
   const deleteContact = id => {
-    axios.post(`${baseUrl}/DeleteContacts.php`, {userId: currentUser.id, [id]})
+    axios.post(`${baseUrl}/DeleteContacts.php`, {userId: currentUser.id, id})
       .then(response => {
           setContacts(response.data.contacts);
       })

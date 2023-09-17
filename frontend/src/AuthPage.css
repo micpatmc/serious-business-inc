@@ -8,7 +8,6 @@
 }
 
 #AuthPage-home-authrow {
-  /* margin: 25rem; */
   background-color: #FFF6E0;
   margin: 0;
   padding: 0 5rem;
@@ -16,10 +15,6 @@
 
 #AuthPage-home-authbox {
   background-color: #D8D9DA;
-
-  /* height: 40vh; */
-  /* margin: 10rem; */
-  /* padding-bottom: 2rem; */
 }
 
 #AuthPage-home-imagebox {
