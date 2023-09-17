@@ -19,8 +19,8 @@
 	else
 	{
 		$stmt = $conn->prepare("SELECT FirstName, LastName FROM Table WHERE FirstName LIKE='?' AND LastName LIKE='?'");
-		$firstName = $inData["FirstName"];
-    	$lastName = $inData["LastName"];
+		// $firstName = $inData["FirstName"];
+  //   	$lastName = $inData["LastName"];
 		
 		$stmt->bind_param("sssss", $id, $firstName, $lastName, $phoneNumber, $emailAddress);
 		$stmt->execute();
