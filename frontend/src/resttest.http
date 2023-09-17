@@ -1,0 +1,37 @@
+POST http://seriousbusinessincorporated.online/LAMPAPI/AddContact.php HTTP/1.1
+content-type: application/json
+
+{
+    "firstName": "Testy",
+    "lastName": "Test",
+    "email": "email@email.com",
+    "phoneNumber": "0000000000",
+    "userId": "27" 
+}
+###
+POST http://seriousbusinessincorporated.online/LAMPAPI/Login.php HTTP/1.1
+content-type: application/json
+
+{
+    "login": "username",
+    "password": "password"
+}
+###
+POST http://seriousbusinessincorporated.online/LAMPAPI/SearchContacts.php HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "27",
+    "firstName": "",
+    "lastName": "",
+    "phoneNumber": "",
+    "emailAddress": ""
+}
+###
+POST http://seriousbusinessincorporated.online/LAMPAPI/DeleteContacts.php HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "27",
+    "id": "0"
+}
