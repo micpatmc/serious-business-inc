@@ -12,12 +12,29 @@ const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 const ContactPage = () => {
   const [contacts, setContacts] = useState([]);
   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  
+  const deleteContact = id => {
+    axios.post(`${baseUrl}/DeleteContacts.php`, {userId: currentUser.id, [id]})
+      .then(response => {
+          setContacts(response.data.contacts);
+      })
+      .catch(error => console.log(error))
+  };
+
+  const editContact = newContact => {
+    
+  }
 
   useEffect(() => {
-    axios.post(`${baseUrl}/SearchContacts.php`)
-      .then(response => { setContacts(response.body); })
+    axios.post(`${baseUrl}/GetContacts.php`, {userId: currentUser.id})
+      // .then(response => { setContacts(response.data.contacts); })
+      .then(response => {
+        if (response.error)
+          setContacts([]);
+        else
+          setContacts(response.data.contacts);
+      })
       .catch(error => console.log(error));
-    setContacts(testContacts);
   }, []);
 
   return (<div className="main">

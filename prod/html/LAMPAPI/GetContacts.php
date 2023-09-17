@@ -9,12 +9,8 @@
 	$searchResults = "";
 	$searchCount = 0;
 
-	$userId = $inData["UserID"];
-	$firstName = $inData["FirstName"];
-	$lastName = $inData["LastName"];
-	$phoneNumber = $inData["Phone"];
-	$emailAddress = $inData["Email"];
-	
+	$userId = $inData["userId"];
+        
 	$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error) 
 	{
@@ -22,9 +18,9 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Contact WHERE (FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID=?");
+		$stmt = $conn->prepare("SELECT * FROM Contact WHERE UserID=?");
 		
-		$stmt->bind_param("sssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
+		$stmt->bind_param("s", $userId);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
@@ -36,7 +32,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '{"firstName" : "' . $row["FirstName"] . '", "lastName" : "' . $row["LastName"] . '", "phoneNumber" : "' . $row["Phone"] . '", "emailAddress" : "' . $row["Email"] . '" , "userId" : "' . $row["UserID"] . '"}';
+			$searchResults .= '{"id": "' . $row["ID"] . '", "firstName" : "' . $row["FirstName"] . '", "lastName" : "' . $row["LastName"] . '", "phoneNumber" : "' . $row["Phone"] . '", "emailAddress" : "' . $row["Email"] . '" , "userId" : "' . $row["UserID"] . '"}';
 		}
 		
 		if( $searchCount == 0 )
@@ -71,7 +67,7 @@
 	
 	function returnWithInfo( $searchResults )
 	{
-		$retValue = '{"results":[' . $searchResults . '],"error":""}';
+		$retValue = '{"contacts":[' . $searchResults . '],"error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
