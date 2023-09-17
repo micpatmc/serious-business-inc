@@ -18,7 +18,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Contact WHERE (FirstName LIKE='?' OR LastName LIKE='?' OR Phone LIKE='?' OR Email LIKE='?') AND UserID='?'");
+		$stmt = $conn->prepare("SELECT * FROM Contact WHERE (FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID=?");
 		
 		$stmt->bind_param("sssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
 		$stmt->execute();
@@ -32,7 +32,6 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '"' . $row["Name"] . '"';
 			$searchResults .= '{"firstName" : "' . $row["FirstName"] . '", "lastName" : "' . $row["LastName"] . '", "phoneNumber" : "' . $row["Phone"] . '", "emailAddress" : "' . $row["Email"] . '" , "userId" : "' . $row["UserID"] . '"}';
 		}
 		
