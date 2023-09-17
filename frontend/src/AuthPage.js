@@ -16,17 +16,17 @@ const AuthPage = () => {
             <img
               src={businessLogo}
               alt="Serious Business Incorporated"
-              width="270"
-              height="90"
+              width="270rem"
+              height="80rem"
             ></img>
         </div>
       </nav>
       <div id="AuthPage-outerbox">
-        {/*Inner box holding AuthBox and side image.*/}
         <div
           id="AuthPage-home-innerbox"
           className="grid text-center rounded shadow-lg mb-5 rounded"
         >
+          {/*Inner box holding AuthBox and side image.*/}
           <div id="AuthPage-home-authrow" className="row align-items-center">
             <AuthBox />
             {/* Picture. */}
@@ -65,8 +65,8 @@ const ToggleBar = ({ loginOn, setLoginOn }) => {
     width: "50%",
     height: "3rem",
     border: "0rem",
-    borderRadius: "9px 9px 0 0",
     fontSize: "1.2rem",
+    padding: "0"
   };
   const onStyle = {
     ...buttonStyle,
@@ -79,12 +79,14 @@ const ToggleBar = ({ loginOn, setLoginOn }) => {
   return (
     <div>
       <button
+        className="rounded"
         style={loginOn ? onStyle : offStyle}
         onClick={() => setLoginOn(true)}
       >
         Login
       </button>
       <button
+        className="rounded"
         style={loginOn ? offStyle : onStyle}
         onClick={() => setLoginOn(false)}
       >
@@ -138,11 +140,11 @@ const LoginCard = () => {
     <div>
       <h2 className="mt-4">Welcome back</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className="form-group row m-5">
+        <div className="form-group row-auto">
           <label for="username" className="col-sm-2 col-form-label">
             Username
           </label>
-          <div className="col-sm-10">
+          <div className="col-auto">
             <input
               type="username"
               className="form-control"
@@ -154,11 +156,11 @@ const LoginCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row m-5">
+        <div className="form-group row-auto">
           <label for="inputPassword" className="col-sm-2 col-form-label">
             Password
           </label>
-          <div className="col-sm-10">
+          <div className="col-auto">
             <input
               type="password"
               className="form-control"
@@ -225,11 +227,11 @@ const RegistrationCard = () => {
     <div>
       <h2 className="mt-4">Create a new account</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className="form-group row m-4">
+        <div className="form-group row-auto">
           <label for="firstName" className="col-sm-2 col-form-label">
             First Name
           </label>
-          <div className="col-sm-10">
+          <div className="col-auto">
             <input
               type="text"
               className="form-control"
@@ -241,11 +243,11 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row m-4">
+        <div className="form-group row-auto">
           <label for="lastName" className="col-sm-2 col-form-label">
             Last Name
           </label>
-          <div className="col-sm-10">
+          <div className="col-auto">
             <input
               type="text"
               className="form-control"
@@ -258,11 +260,11 @@ const RegistrationCard = () => {
           </div>
         </div>
         <hr />
-        <div className="form-group row m-4">
+        <div className="form-group row-auto">
           <label for="username" className="col-sm-2 col-form-label">
             Username
           </label>
-          <div className="col-sm-10">
+          <div className="col-auto">
             <input
               type="username"
               className="form-control"
@@ -274,11 +276,11 @@ const RegistrationCard = () => {
             />
           </div>
         </div>
-        <div className="form-group row m-4">
+        <div className="form-group row-auto">
           <label for="password" className="col-sm-2 col-form-label">
             Password
           </label>
-          <div className="col-sm-10">
+          <div className="col-auto">
             <input
               type="password"
               className="form-control"

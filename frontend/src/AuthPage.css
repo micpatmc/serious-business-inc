@@ -1,32 +1,37 @@
 #AuthPage-nav {
   background-color: #61677A;
-  height: 7vh;
+  /* height: 5%; */
 }
 
 #AuthPage-home {
-  height: 100vh;
+
 }
 
 #AuthPage-outerbox {
   background-color: #D8D9DA;
-  padding-top: 10rem;
-  height: 93vh;
+  /* height: 100%; */
+  /* padding-top: 10rem; */
+  /* height: 93vh; */
 }
 
 #AuthPage-home-innerbox {
-    margin: 0 10rem;
     background-color: #FFF6E0;
+    margin-left: 10rem;
+    margin-right: 10rem;
 }
 
 #AuthPage-home-authrow {
-
+  /* margin: 25rem; */
+  margin: 0;
+  padding: 0 5rem;
 }
 
 #AuthPage-home-authbox {
   background-color: #D8D9DA;
-  height: 40vh;
-  margin: 10rem;
-  padding: 0 0;
+
+  /* height: 40vh; */
+  /* margin: 10rem; */
+  /* padding-bottom: 2rem; */
 }
 
 #AuthPage-home-imagebox {
@@ -37,7 +42,6 @@
     width: 50%;
     height: 3rem;
     border: 0rem;
-    border-radius: 9px 9px 0 0;
     font-size: 1.2rem;
   }
 
