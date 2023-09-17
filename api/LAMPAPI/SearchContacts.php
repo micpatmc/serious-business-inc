@@ -5,20 +5,20 @@
 	$searchResults = "";
 	$searchCount = 0;
 
-	$id = $inData["userId"];
-	$firstName = $inData["firstName"];
-	$lastName = $inData["lastName"];
-	$phoneNumber = $inData["phone"];
-	$emailAddress = $inData["email"];
+	$id = $inData["UserID"];
+	$firstName = $inData["FirstName"];
+	$lastName = $inData["LastName"];
+	$phoneNumber = $inData["Phone"];
+	$emailAddress = $inData["Email"];
 	
-	$conn = new mysqli("localhost", "Itachi", "!COP4331isthebest", "COP4331");
+	$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT firstName, lastName FROM Table WHERE firstName LIKE='?' AND lastName LIKE='?'");
+		$stmt = $conn->prepare("SELECT FirstName, LastName FROM Table WHERE FirstName LIKE='?' AND LastName LIKE='?'");
 		$firstName = $inData["FirstName"];
     	$lastName = $inData["LastName"];
 		
