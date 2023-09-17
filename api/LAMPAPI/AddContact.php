@@ -1,40 +1,42 @@
 <?php
-// need to check if the contact already exists
-$inData = getRequestInfo();
+	$inData = getRequestInfo();
+	
+	$firstName = $inData["FirstName"];
+	$lastName = $inData["LastName"];
+	$phoneNumber = $inData["Phone"];
+	$emailAddress = $inData["Email"];
+	$userId = $inData["UserID"];
 
-$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
-if ($conn->connect_error) {
-    returnWithError($conn->connect_error);
-} else {
-    $firstName = $inData["FirstName"];
-    $lastName = $inData["LastName"];
-    $email = $inData["Email"];
-    $phoneNumber = $inData["Phone"];
-    $userId = $inData["UserId"];
+	$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
+	if ($conn->connect_error) 
+	{
+		returnWithError( $conn->connect_error );
+	} 
+	else
+	{
+		$stmt = $conn->prepare("INSERT into Contact (FirstName, LastName, Phone, Email, UserID) VALUES(?,?,?,?,?)");
+		$stmt->bind_param("sssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
+		$stmt->execute();
+		$stmt->close();
+		$conn->close();
+		returnWithError("");
+	}
 
-    $stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Email, PhoneNumber, UserID) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $firstName, $lastName, $email, $phoneNumber, $userId);
-    $stmt->execute();
-    
-    $stmt->close();
-    $conn->close();
-}
+	function getRequestInfo()
+	{
+		return json_decode(file_get_contents('php://input'), true);
+	}
 
-function getRequestInfo()
-{
-    return json_decode(file_get_contents('php://input'), true);
-}
-
-function sendResultInfoAsJson($obj)
-{
-    header('Content-type: application/json');
-    echo $obj;
-}
-
-function returnWithError($err)
-{
-    $retValue = '{"error":"' . $err . '"}';
-    sendResultInfoAsJson($retValue);
-}
-
+	function sendResultInfoAsJson( $obj )
+	{
+		header('Content-type: application/json');
+		echo $obj;
+	}
+	
+	function returnWithError( $err )
+	{
+		$retValue = '{"error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+	
 ?>
