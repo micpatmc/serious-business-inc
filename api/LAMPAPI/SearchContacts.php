@@ -5,7 +5,7 @@
 	$searchResults = "";
 	$searchCount = 0;
 
-	$id = $inData["UserID"];
+	$userId = $inData["UserID"];
 	$firstName = $inData["FirstName"];
 	$lastName = $inData["LastName"];
 	$phoneNumber = $inData["Phone"];
@@ -18,11 +18,9 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT FirstName, LastName FROM Table WHERE FirstName LIKE='?' AND LastName LIKE='?'");
-		// $firstName = $inData["FirstName"];
-  //   	$lastName = $inData["LastName"];
+		$stmt = $conn->prepare("SELECT * FROM Contact WHERE (FirstName LIKE='?' OR LastName LIKE='?' OR Phone LIKE='?' OR Email LIKE='?') AND UserID='?'");
 		
-		$stmt->bind_param("sssss", $id, $firstName, $lastName, $phoneNumber, $emailAddress);
+		$stmt->bind_param("sssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
@@ -35,6 +33,7 @@
 			}
 			$searchCount++;
 			$searchResults .= '"' . $row["Name"] . '"';
+			$searchResults .= '{"firstName" : "' . $row["FirstName"] . '", "lastName" : "' . $row["LastName"] . '", "phoneNumber" : "' . $row["Phone"] . '", "emailAddress" : "' . $row["Email"] . '" , "userId" : "' . $row["UserID"] . '"}';
 		}
 		
 		if( $searchCount == 0 )
