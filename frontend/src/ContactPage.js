@@ -3,6 +3,7 @@ import axios from 'axios';
 import testContacts from './testContacts.json';
 import logo from './images/largeLogo.png';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import {
   MdOutlineExitToApp
 } from 'react-icons/md';
@@ -11,7 +12,8 @@ const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 
 const ContactPage = () => {
   const [contacts, setContacts] = useState([]);
-  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  // const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(Cookies.get('currentUser'));
 
   const performPost = (operation, object) => {
     const plural = operation === 'Get' ? 's' : '';

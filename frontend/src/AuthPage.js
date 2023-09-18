@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import "./AuthPage.css";
-
+import Cookies from 'js-cookie';
 import axios from "axios";
 import stockArt from "./images/login_page_image.png";
 import businessLogo from "./images/largeLogo.png";
@@ -123,7 +123,8 @@ const LoginCard = () => {
           console.log(response.data.error);
           setShowError(true);
         } else {
-          sessionStorage.setItem("currentUser", JSON.stringify(response.data));
+          // sessionStorage.setItem("currentUser", JSON.stringify(response.data));
+          Cookies.set('currentUser', JSON.stringify(response.data));
           navigate("/contacts");
         }
       })
