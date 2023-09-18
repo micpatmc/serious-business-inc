@@ -3,10 +3,10 @@ content-type: application/json
 
 {
     "firstName": "j",
-    "lastName": "",
+    "lastName": "hfkdfiyilh",
     "phoneNumber": "dfsjf",
     "emailAddress": "fjdskfhdsjifuo",
-    "userId": "39"
+    "userId": "27"
 }
 ###
 POST http://seriousbusinessincorporated.online/LAMPAPI/GetContacts.php HTTP/1.1
