@@ -4,8 +4,11 @@
 }
 
 #AuthPage-nav {
-  background-color: #61677A;
-  /* height: 5%; */
+  background-color: #272829;
+}
+
+#Authpage-nav-logo {
+  filter: invert(1);
 }
 
 #AuthPage-home-authrow {

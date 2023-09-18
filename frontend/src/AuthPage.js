@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import "./AuthPage.css";
+
 import axios from "axios";
 import stockArt from "./images/login_page_image.png";
 import businessLogo from "./images/largeLogo.png";
@@ -11,9 +12,10 @@ const AuthPage = () => {
     <div
       id="AuthPage-home"
     >
-      <nav id="AuthPage-nav" class="navbar-dark">
+      <nav id="AuthPage-nav">
         <div class="container-fluid">
             <img
+              id="Authpage-nav-logo"
               src={businessLogo}
               alt="Serious Business Incorporated"
               width="270rem"
