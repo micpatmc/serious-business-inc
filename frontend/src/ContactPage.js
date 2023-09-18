@@ -84,7 +84,8 @@ const ContactBook = ({contacts, addContact, updateContact, deleteContact}) => {
   const [isAdding, setIsAdding] = useState(false);
 
   const contactContainsSearch = (contact) => {
-    return JSON.stringify(contact).includes(search);
+    return `${contact.firstName.toLowerCase()} ${contact.lastName.toLowerCase()} ${contact.phoneNumber} ${contact.emailAddress}`.includes(search);
+    // return JSON.stringify(contact).includes(search);
   }
 
   const handleAdd = () => {
@@ -114,6 +115,7 @@ const ContactBook = ({contacts, addContact, updateContact, deleteContact}) => {
       />
       <button
         onClick={handleAdd}
+        className="button-4"
       >
         Add contact
       </button>
@@ -300,17 +302,19 @@ const Contact = ({contact, updateContact, deleteContact}) => {
         />
       </td>
       <td>
-        <input
-          form={contact.id}
-          type="submit"
-          className="button-4"
-        />
-        <button
-          className="button-4"
-          onClick={() => setIsEditing(false)}
-        >
-          Cancel
-        </button>
+        <span className="action-menu">
+          <input
+            form={contact.id}
+            type="submit"
+            className="button-4"
+          />
+          <button
+            className="button-4"
+            onClick={() => setIsEditing(false)}
+          >
+            Cancel
+          </button>
+        </span>
       </td>
     </tr>;
   return !isEditing ? <tr>
