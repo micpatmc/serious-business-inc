@@ -219,12 +219,16 @@ const AddContact = ({addContact, setIsAdding, userId}) => {
 const Contact = ({contact, updateContact, deleteContact}) => {
   const [editContact, setEditContact] = useState(contact);
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
     updateContact(editContact);
     setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete the contact "${contact.firstName} ${contact.lastName}"?`))
+      deleteContact(contact);
   };
 
   const handleChange = (key, e) => {
@@ -234,33 +238,6 @@ const Contact = ({contact, updateContact, deleteContact}) => {
     });
   };
 
-  const actionMenu = !isDeleting
-    ? <span className="action-menu">
-      <button
-        onClick={() => setIsEditing(true)}
-          className="button-4"
-      >
-        Edit
-      </button>
-      <button
-        onClick={() => setIsDeleting(true)}
-          className="button-4"
-      >
-        Delete
-      </button>
-    </span>
-    : <span className="action-menu">
-      <button
-        onClick={() => setIsDeleting(false)}
-        className="button-4"
-      >Cancel</button>
-      <button
-        onClick={() => {
-          deleteContact(contact)
-        }}
-        className="button-4 delete-button"
-      >Confirm deletion</button>
-    </span>;
 
   const editableContact = 
     <tr>
@@ -324,7 +301,20 @@ const Contact = ({contact, updateContact, deleteContact}) => {
     <td>{contact.phoneNumber}</td>
     <td>{contact.emailAddress}</td>
     <td className="action-menu">
-      { actionMenu }
+      <span className="action-menu">
+        <button
+          onClick={() => setIsEditing(true)}
+            className="button-4"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => handleDelete()}
+          className="button-4"
+        >
+          Delete
+        </button>
+      </span>
     </td>
   </tr> : editableContact;
 };
