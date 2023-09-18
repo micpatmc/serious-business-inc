@@ -1,93 +1,66 @@
 <?php
-	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Methods: GET, POST');
-	header("Access-Control-Allow-Headers: *");
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: *');
+    header("Access-Control-Allow-Headers: *");
 
-	$inData = getRequestInfo();
-	
-	$firstName = $inData["firstName"];
-	$lastName = $inData["lastName"];
-	$phoneNumber = $inData["phoneNumber"];
-	$emailAddress = $inData["emailAddress"];
-	$userId = $inData["userId"];
-	$id = $inData["id"]; // Assuming you send ID along with the request if you want to update.
+    $inData = getRequestInfo();
 
-	$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
-	if ($conn->connect_error) 
-	{
-		returnWithError( $conn->connect_error );
-	} 
-	else
-	{
-		// Update contact if ID is provided
-		if (isset($id)) 
-		{
-			$stmt = $conn->prepare("UPDATE Contact SET FirstName=?, LastName=?, Phone=?, Email=? WHERE UserID=? AND ID=?");
-			$stmt->bind_param("ssssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId, $id);
-			$stmt->execute();
+    $firstName = $inData["firstName"];
+    $lastName = $inData["lastName"];
+    $phoneNumber = $inData["phoneNumber"];
+    $emailAddress = $inData["emailAddress"];
+    $userId = $inData["userId"];
+    $id = $inData["id"];
 
-			if ($stmt->affected_rows <= 0)
-			{
-				returnWithError("No contact updated.");
-				$stmt->close();
-				$conn->close();
-				exit();
-			}
-		}
+    $conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
 
-		// Fetch all contacts with the specified UserID
-		$searchResults = "";
-		$searchCount = 0;
+    if ($conn->connect_error) {
+        returnWithError($conn->connect_error);
+    } else {
+        $stmt = $conn->prepare("UPDATE Contact SET FirstName=?, LastName=?, Phone=?, Email=? WHERE UserID=? AND ID=?");
+        $stmt->bind_param("ssssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId, $id);
+        $stmt->execute();
 
-		$stmt = $conn->prepare("SELECT * FROM Contact WHERE UserID=?");
-		$stmt->bind_param("s", $userId);
-		$stmt->execute();
-		
-		$result = $stmt->get_result();
-		
-		while($row = $result->fetch_assoc())
-		{
-			if( $searchCount > 0 )
-			{
-				$searchResults .= ",";
-			}
-			$searchCount++;
-			$searchResults .= '{"firstName" : "' . $row["FirstName"] . '", "lastName" : "' . $row["LastName"] . '", "phoneNumber" : "' . $row["Phone"] . '", "emailAddress" : "' . $row["Email"] . '" , "userId" : "' . $row["UserID"] . '", "id" : "' . $row["ID"] . '"}';
-		}
+        $stmt->close();
 
-		if ($searchCount == 0)
-		{
-			returnWithError("No Records Found.");
-		}
-		else
-		{
-			returnWithInfo($searchResults);
-		}
-		
-		$stmt->close();
-		$conn->close();
-	}
+        // Fetch all contacts with matching UserID, regardless of whether the update was successful
+        $stmt = $conn->prepare("SELECT ID as id, UserID as userId, FirstName as firstName, LastName as lastName, Email as emailAddress, Phone as phoneNumber FROM Contact WHERE UserId=?");
+        $stmt->bind_param("s", $userId);
+        $stmt->execute();
 
-	function getRequestInfo()
-	{
-		return json_decode(file_get_contents('php://input'), true);
-	}
+        $result = $stmt->get_result();
+        $contactsArray = array();
 
-	function sendResultInfoAsJson( $obj )
-	{
-		header('Content-type: application/json');
-		echo $obj;
-	}
-	
-	function returnWithError( $err )
-	{
-		$retValue = '{"contacts":[], "error":"' . $err . '"}';
-		sendResultInfoAsJson( $retValue );
-	}
-	
-	function returnWithInfo( $searchResults )
-	{
-		$retValue = '{"contacts":[' . $searchResults . '],"error":""}';
-		sendResultInfoAsJson( $retValue );
-	}
+        while($row = $result->fetch_assoc()) {
+            $contactsArray[] = $row;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        returnWithInfo(json_encode($contactsArray));
+    }
+
+    function getRequestInfo()
+    {
+        return json_decode(file_get_contents('php://input'), true);
+    }
+
+    function sendResultInfoAsJson($obj)
+    {
+        header('Content-type: application/json');
+        echo $obj;
+    }
+
+    function returnWithError($err)
+    {
+        $retValue = '{"contacts":[],"error":"' . $err . '"}';
+        sendResultInfoAsJson($retValue);
+    }
+
+    function returnWithInfo($searchResults)
+    {
+        $retValue = '{"contacts":' . $searchResults . ',"error":""}';
+        sendResultInfoAsJson($retValue);
+    }
 ?>
