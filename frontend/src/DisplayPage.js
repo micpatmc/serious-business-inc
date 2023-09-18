@@ -1,6 +1,7 @@
 import React from "react";
+import "./DisplayPage.css";
 import businessLogo from "./images/largeLogo.png";
-import businessCartoon from "./images/display_page.jpg";
+import businessCartoon from "./images/display_page.png";
 import { useNavigate } from "react-router-dom";
 
 const DisplayPage = () => {
@@ -32,23 +33,25 @@ const DisplayPage = () => {
             <h1>Welcome to our site!</h1>
             <h2>Serious Business Inc.</h2>
             <h3>Contact Manager</h3>
-            <p className="">
+            <p id="DisplayPage-missionstatement">
               Serious Business Incorporated integrates cutting-edge business
               solutions to drive growth. Stakeholder engagement remains
               paramount in our market-centric approach. Through strategic
               alignment and robust value propositions, industry benchmarks
               consistently evolve.
             </p>
-            <h1 onClick={goToTargetPage} style={{ textAlign: "center" }}>
-              This is a test Display Page. Click me to login.
-            </h1>
+            <button 
+              className="btn btn-secondary m-3"
+              onClick={goToTargetPage}>
+              Login/Registration
+            </button>
           </div>
           <div className="col">
-            <img
+            {/* <img
               className="img-fluid"
               src={businessCartoon}
               alt="Cartoon people disucssing business."
-            ></img>
+            ></img> */}
           </div>
         </div>
       </div>

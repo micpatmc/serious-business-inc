@@ -1,9 +1,12 @@
 #DisplayPage-background {
     background-color: #D8D9DA;
-    height: 100%;
+    height: 100vh;
 }
 
 #DisplayPage-centerbox {
     background-color: #FFF6E0;
-    padding: 0 5rem;
+    /* padding: 0 5rem; */
+}
+
+#DisplayPage-missionstatement {
 }

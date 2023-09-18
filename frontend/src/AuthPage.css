@@ -1,10 +1,11 @@
+#AuthPage-home {
+  background-color: #D8D9DA;
+  height: 100vh;
+}
+
 #AuthPage-nav {
   background-color: #61677A;
   /* height: 5%; */
-}
-
-#AuthPage-home {
-  background-color: #D8D9DA;
 }
 
 #AuthPage-home-authrow {

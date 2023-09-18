@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import "./AuthPage.css";
 import axios from "axios";
-import stockArt from "./images/login_page_image1.png";
+import stockArt from "./images/login_page_image.png";
 import businessLogo from "./images/largeLogo.png";
 import { useNavigate } from "react-router-dom";
 const baseUrl = "http://seriousbusinessincorporated.online/LAMPAPI";
