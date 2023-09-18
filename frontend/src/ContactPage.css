@@ -13,6 +13,14 @@ header {
     max-height: 100%;
 }
 
+#AuthPage-nav {
+  background-color: #272829;
+}
+
+#Authpage-nav-logo {
+  filter: invert(1);
+}
+
 #header-right-span {
     display: flex;
     flex-direction: row;
