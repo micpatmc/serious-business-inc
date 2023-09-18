@@ -12,34 +12,37 @@ const baseUrl = 'http://seriousbusinessincorporated.online/LAMPAPI';
 const ContactPage = () => {
   const [contacts, setContacts] = useState([]);
   const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-  
-  const deleteContact = id => {
-    axios.post(`${baseUrl}/DeleteContacts.php`, {userId: currentUser.id, id})
+
+  const performPost = (operation, object) => {
+    const plural = operation === 'Get' ? 's' : '';
+    axios.post(`${baseUrl}/${operation}Contact${plural}.php`, object)
       .then(response => {
-          setContacts(response.data.contacts);
+        console.log(response);
+        setContacts(response.data.contacts);
       })
       .catch(error => console.log(error))
-  };
-
-  const editContact = newContact => {
-    
   }
 
+  const addContact = contact => {
+    contact.userId = currentUser.id;
+    performPost('Add', contact);
+  };
+  const getContacts = userId => performPost('Get', {userId});
+  const updateContact = contact => {
+    contact.userId = currentUser.id;
+    console.log(contact);
+    performPost('Update', contact)
+  };
+  const deleteContact = contact => performPost('Delete', {id: contact.id, userId: currentUser.id});
+
+
   useEffect(() => {
-    axios.post(`${baseUrl}/GetContacts.php`, {userId: currentUser.id})
-      // .then(response => { setContacts(response.data.contacts); })
-      .then(response => {
-        if (response.error)
-          setContacts([]);
-        else
-          setContacts(response.data.contacts);
-      })
-      .catch(error => console.log(error));
+    getContacts(currentUser.id);
   }, []);
 
   return (<div className="main">
     <HeaderBar currentUser={currentUser} />
-    <ContactBook contacts={contacts} />
+    <ContactBook contacts={contacts} addContact={addContact} updateContact={updateContact} deleteContact={deleteContact} />
   </div>);
 };
 
@@ -57,35 +60,51 @@ const HeaderBar = ({currentUser}) => {
         className="header-logo"
         src={logo}
       />
-      <h1
-        style={{
-          margin: "auto"
-        }}
-      >Contact Manager</h1>
-      <ProfileIcon contact={currentUser} />
-      <h3
-      >Hello, {currentUser.firstName}</h3>
-      <button
-        className="log-out button-4"
-        onClick={logOut}
-      >
-        <MdOutlineExitToApp
-          size="2em"
-        />
-        <h3 style={{marginBlock: 0}}>Log out</h3>
-      </button>
+      <h1 id="header-text">Contact Manager</h1>
+      <span id="header-right-span">
+        <ProfileIcon contact={currentUser} />
+        <h3
+        >Hello, {currentUser.firstName}</h3>
+        <button
+          className="log-out button-4"
+          onClick={logOut}
+        >
+          <MdOutlineExitToApp
+            size="2em"
+          />
+          <h3 style={{marginBlock: 0}}>Log out</h3>
+        </button>
+      </span>
     </header>
   );
 };
-const ContactBook = ({contacts}) => {
+
+const ContactBook = ({contacts, addContact, updateContact, deleteContact}) => {
   const [search, setSearch] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
 
   const contactContainsSearch = (contact) => {
     return JSON.stringify(contact).includes(search);
   }
 
+  const handleAdd = () => {
+    setIsAdding(true);
+  }
+
+  const tableRows = contacts.length === 0 && !isAdding
+    ? <tr>
+      <td />
+      <td />
+      <td />
+      <td id="no-contacts-error ">No contacts found</td>
+    </tr>
+    : contacts
+      .filter(contact => contactContainsSearch(contact))
+      .sort((a, b) => a.lastName.charCodeAt(0) - b.lastName.charCodeAt(0))
+      .map(contact => <Contact contact={contact} key={contact.id} updateContact={updateContact} deleteContact={deleteContact} />);
+
   return (<main>
-    <span>
+    <span id="contact-book-header">
       <input
         className="searchBar"
         type="text"
@@ -93,7 +112,9 @@ const ContactBook = ({contacts}) => {
         placeholder="Search contacts"
         onChange={e => setSearch(e.target.value)}
       />
-      <button>
+      <button
+        onClick={handleAdd}
+      >
         Add contact
       </button>
     </span>
@@ -109,24 +130,98 @@ const ContactBook = ({contacts}) => {
         </tr>
       </thead>
       <tbody>
-      {
-        contacts
-          .filter(contact => contactContainsSearch(contact))
-          .sort((a, b) => a.lastName.charCodeAt(0) - b.lastName.charCodeAt(0))
-          .map(contact => <Contact contact={contact} key={contact.id} />)
-      }
+      { isAdding ? <AddContact addContact = {addContact} setIsAdding={setIsAdding} /> : null }
+      { tableRows }
       </tbody>
     </table>
   </main>);
 };
 
-const Contact = ({contact, }) => {
-  const [editContact, setEditContact] = useState(contact);
-  const [isEditing, setIsEditing] = useState(false);
+const AddContact = ({addContact, setIsAdding, userId}) => {
+  const [editContact, setEditContact] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    emailAddress: ''
+  });
 
   const handleSubmit = e => {
     e.preventDefault();
-    // axios post EditContact.php
+    addContact(editContact);
+    setIsAdding(false)
+  };
+
+  const handleChange = (key, e) => {
+    setEditContact({
+      ...editContact,
+      [key]: e.target.value
+    });
+  };
+
+  return <tr>
+    <td>
+      <form id={-1} onSubmit={e => handleSubmit(e)} >
+        <input type="hidden" />
+      </form>
+    </td>
+    <td>
+      <input required
+        form={-1}
+        placeholder="Enter first name"
+        value={editContact.firstName}
+        onChange={e => handleChange('firstName', e)}
+      />
+    </td>
+    <td>
+      <input required
+        form={-1}
+        placeholder="Enter last name"
+        value={editContact.lastName}
+        onChange={e => handleChange('lastName', e)}
+      />
+      </td>
+    <td>
+      <input required
+        form={-1}
+        placeholder="Enter phone number"
+        value={editContact.phoneNumber}
+        onChange={e => handleChange('phoneNumber', e)}
+      />
+      </td>
+    <td>
+      <input required
+        form={-1}
+        placeholder="Enter email address"
+        value={editContact.emailAddress}
+        onChange={e => handleChange('emailAddress', e)}
+      />
+    </td>
+    <td>
+      <span className="action-menu">
+        <input
+          form={-1}
+          type="submit"
+          className="button-4"
+        />
+        <button
+          className="button-4"
+          onClick={() => setIsAdding(false)}
+        >
+          Cancel
+        </button>
+      </span>
+    </td>
+  </tr>;
+};
+
+const Contact = ({contact, updateContact, deleteContact}) => {
+  const [editContact, setEditContact] = useState(contact);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    updateContact(editContact);
     setIsEditing(false);
   };
 
@@ -136,6 +231,34 @@ const Contact = ({contact, }) => {
       [key]: e.target.value
     });
   };
+
+  const actionMenu = !isDeleting
+    ? <span className="action-menu">
+      <button
+        onClick={() => setIsEditing(true)}
+          className="button-4"
+      >
+        Edit
+      </button>
+      <button
+        onClick={() => setIsDeleting(true)}
+          className="button-4"
+      >
+        Delete
+      </button>
+    </span>
+    : <span className="action-menu">
+      <button
+        onClick={() => setIsDeleting(false)}
+        className="button-4"
+      >Cancel</button>
+      <button
+        onClick={() => {
+          deleteContact(contact)
+        }}
+        className="button-4 delete-button"
+      >Confirm deletion</button>
+    </span>;
 
   const editableContact = 
     <tr>
@@ -147,6 +270,7 @@ const Contact = ({contact, }) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter first name"
           value={editContact.firstName}
           onChange={e => handleChange('firstName', e)}
         />
@@ -154,6 +278,7 @@ const Contact = ({contact, }) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter last name"
           value={editContact.lastName}
           onChange={e => handleChange('lastName', e)}
         />
@@ -161,6 +286,7 @@ const Contact = ({contact, }) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter phone number"
           value={editContact.phoneNumber}
           onChange={e => handleChange('phoneNumber', e)}
         />
@@ -168,6 +294,7 @@ const Contact = ({contact, }) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter email address"
           value={editContact.emailAddress}
           onChange={e => handleChange('emailAddress', e)}
         />
@@ -176,6 +303,7 @@ const Contact = ({contact, }) => {
         <input
           form={contact.id}
           type="submit"
+          className="button-4"
         />
         <button
           className="button-4"
@@ -191,38 +319,16 @@ const Contact = ({contact, }) => {
     <td>{contact.lastName}</td>
     <td>{contact.phoneNumber}</td>
     <td>{contact.emailAddress}</td>
-    <td>
-      <button
-        onClick={() => setIsEditing(true)}
-          className="button-4"
-      >
-        Edit
-      </button>
-      <button
-          className="button-4"
-      >
-        Delete
-      </button>
+    <td className="action-menu">
+      { actionMenu }
     </td>
   </tr> : editableContact;
 };
 
 const ProfileIcon = ({contact}) => {
-  const initials = contact.firstName.charAt(0) +
-  contact.lastName.charAt(0)
+  const initials = contact.firstName.charAt(0) + contact.lastName.charAt(0);
   return (
-    <div
-      style={{
-        height: "2.5em",
-        width: "2.5em",
-        borderRadius: "1.5em",
-        backgroundColor: "lightblue",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "1.2em"
-      }}
-    >
+    <div className="profile-icon">
       <p><b>{initials}</b></p>
     </div>
   );
