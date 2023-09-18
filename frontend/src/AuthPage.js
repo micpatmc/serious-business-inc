@@ -168,11 +168,11 @@ const LoginCard = () => {
             />
           </div>
         </div>
-        <input type="submit" className="btn btn-secondary m-3" />
+        <input type="submit" className="btn btn-secondary m-2" />
       </form>
       <div hidden={!showError}>
         <div
-          class="alert alert-danger d-flex align-items-center m-4"
+          class="alert alert-danger d-flex align-items-center m-3"
           role="alert"
         >
           <svg
@@ -191,7 +191,6 @@ const LoginCard = () => {
         </div>
       </div>
     </div>
-    //<h1 style={{ color: "red" }}>{errorMsg.msg}</h1>
   );
 };
 
