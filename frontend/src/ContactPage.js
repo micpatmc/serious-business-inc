@@ -33,7 +33,7 @@ const ContactPage = () => {
     console.log(contact);
     performPost('Update', contact)
   };
-  const deleteContact = contact => performPost('Delete', contact);
+  const deleteContact = contact => performPost('Delete', {id: contact.id, userId: currentUser.id});
 
 
   useEffect(() => {
@@ -101,10 +101,10 @@ const ContactBook = ({contacts, addContact, updateContact, deleteContact}) => {
     : contacts
       .filter(contact => contactContainsSearch(contact))
       .sort((a, b) => a.lastName.charCodeAt(0) - b.lastName.charCodeAt(0))
-      .map(contact => <Contact contact={contact} key={contact.id} updateContact={updateContact} />);
+      .map(contact => <Contact contact={contact} key={contact.id} updateContact={updateContact} deleteContact={deleteContact} />);
 
   return (<main>
-    <span>
+    <span id="contact-book-header">
       <input
         className="searchBar"
         type="text"
@@ -167,6 +167,7 @@ const AddContact = ({addContact, setIsAdding, userId}) => {
     <td>
       <input required
         form={-1}
+        placeholder="Enter first name"
         value={editContact.firstName}
         onChange={e => handleChange('firstName', e)}
       />
@@ -174,6 +175,7 @@ const AddContact = ({addContact, setIsAdding, userId}) => {
     <td>
       <input required
         form={-1}
+        placeholder="Enter last name"
         value={editContact.lastName}
         onChange={e => handleChange('lastName', e)}
       />
@@ -181,6 +183,7 @@ const AddContact = ({addContact, setIsAdding, userId}) => {
     <td>
       <input required
         form={-1}
+        placeholder="Enter phone number"
         value={editContact.phoneNumber}
         onChange={e => handleChange('phoneNumber', e)}
       />
@@ -188,28 +191,33 @@ const AddContact = ({addContact, setIsAdding, userId}) => {
     <td>
       <input required
         form={-1}
+        placeholder="Enter email address"
         value={editContact.emailAddress}
         onChange={e => handleChange('emailAddress', e)}
       />
     </td>
     <td>
-      <input
-        form={-1}
-        type="submit"
-      />
-      <button
-        className="button-4"
-        onClick={() => setIsAdding(false)}
-      >
-        Cancel
-      </button>
+      <span className="action-menu">
+        <input
+          form={-1}
+          type="submit"
+          className="button-4"
+        />
+        <button
+          className="button-4"
+          onClick={() => setIsAdding(false)}
+        >
+          Cancel
+        </button>
+      </span>
     </td>
   </tr>;
 };
 
-const Contact = ({contact, updateContact}) => {
+const Contact = ({contact, updateContact, deleteContact}) => {
   const [editContact, setEditContact] = useState(contact);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -224,6 +232,34 @@ const Contact = ({contact, updateContact}) => {
     });
   };
 
+  const actionMenu = !isDeleting
+    ? <span className="action-menu">
+      <button
+        onClick={() => setIsEditing(true)}
+          className="button-4"
+      >
+        Edit
+      </button>
+      <button
+        onClick={() => setIsDeleting(true)}
+          className="button-4"
+      >
+        Delete
+      </button>
+    </span>
+    : <span className="action-menu">
+      <button
+        onClick={() => setIsDeleting(false)}
+        className="button-4"
+      >Cancel</button>
+      <button
+        onClick={() => {
+          deleteContact(contact)
+        }}
+        className="button-4 delete-button"
+      >Confirm deletion</button>
+    </span>;
+
   const editableContact = 
     <tr>
       <td>
@@ -234,6 +270,7 @@ const Contact = ({contact, updateContact}) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter first name"
           value={editContact.firstName}
           onChange={e => handleChange('firstName', e)}
         />
@@ -241,6 +278,7 @@ const Contact = ({contact, updateContact}) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter last name"
           value={editContact.lastName}
           onChange={e => handleChange('lastName', e)}
         />
@@ -248,6 +286,7 @@ const Contact = ({contact, updateContact}) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter phone number"
           value={editContact.phoneNumber}
           onChange={e => handleChange('phoneNumber', e)}
         />
@@ -255,6 +294,7 @@ const Contact = ({contact, updateContact}) => {
       <td>
         <input required
           form={contact.id}
+          placeholder="Enter email address"
           value={editContact.emailAddress}
           onChange={e => handleChange('emailAddress', e)}
         />
@@ -263,6 +303,7 @@ const Contact = ({contact, updateContact}) => {
         <input
           form={contact.id}
           type="submit"
+          className="button-4"
         />
         <button
           className="button-4"
@@ -278,38 +319,16 @@ const Contact = ({contact, updateContact}) => {
     <td>{contact.lastName}</td>
     <td>{contact.phoneNumber}</td>
     <td>{contact.emailAddress}</td>
-    <td>
-      <button
-        onClick={() => setIsEditing(true)}
-          className="button-4"
-      >
-        Edit
-      </button>
-      <button
-          className="button-4"
-      >
-        Delete
-      </button>
+    <td className="action-menu">
+      { actionMenu }
     </td>
   </tr> : editableContact;
 };
 
 const ProfileIcon = ({contact}) => {
-  const initials = contact.firstName.charAt(0) +
-  contact.lastName.charAt(0)
+  const initials = contact.firstName.charAt(0) + contact.lastName.charAt(0);
   return (
-    <div
-      style={{
-        height: "2.5em",
-        width: "2.5em",
-        borderRadius: "1.5em",
-        backgroundColor: "lightblue",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "1.2em"
-      }}
-    >
+    <div className="profile-icon">
       <p><b>{initials}</b></p>
     </div>
   );
