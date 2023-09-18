@@ -3,9 +3,12 @@
     height: 100vh;
 }
 
+#Authpage-nav-logo {
+    filter: invert(1);
+}
+
 #DisplayPage-centerbox {
     background-color: #FFF6E0;
-    /* padding: 0 5rem; */
 }
 
 #DisplayPage-missionstatement {

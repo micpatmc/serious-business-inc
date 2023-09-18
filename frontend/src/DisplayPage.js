@@ -13,9 +13,10 @@ const DisplayPage = () => {
 
   return (
     <div id="DisplayPage-background">
-      <nav id="AuthPage-nav" class="navbar-dark">
+      <nav id="AuthPage-nav">
         <div class="container-fluid">
           <img
+            id="Authpage-nav-logo"
             src={businessLogo}
             alt="Serious Business Incorporated"
             width="270"
