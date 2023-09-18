@@ -45,7 +45,7 @@ const AuthBox = () => {
     // Login/Register box.
     <div
       id="AuthPage-home-authbox"
-      className="col shadow-lg rounded"
+      className="col shadow-lg rounded p-0"
     >
       <ToggleBar loginOn={loginOn} setLoginOn={setLoginOn} />
       {authState}
