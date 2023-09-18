@@ -45,11 +45,11 @@ const DisplayPage = () => {
           </button>
         </div>
         <div className="col">
-          {/* <img
-              className="img-fluid"
-              src={businessCartoon}
-              alt="Cartoon people disucssing business."
-            ></img> */}
+          <img
+            className="img-fluid"
+            src={businessCartoon}
+            alt="Cartoon people disucssing business."
+          ></img>
         </div>
       </div>
       {/* </div> */}
