@@ -1,28 +1,30 @@
 <?php
+	header('Access-Control-Allow-Origin: *');
+	header('Access-Control-Allow-Methods: GET, POST');
+	header("Access-Control-Allow-Headers: *");
+
 
 	$inData = getRequestInfo();
 	
 	$searchResults = "";
 	$searchCount = 0;
 
-	$id = $inData["userId"];
-	$firstName = $inData["firstName"];
-	$lastName = $inData["lastName"];
-	$phoneNumber = $inData["phone"];
-	$emailAddress = $inData["email"];
+	$userId = $inData["UserID"];
+	$firstName = $inData["FirstName"];
+	$lastName = $inData["LastName"];
+	$phoneNumber = $inData["Phone"];
+	$emailAddress = $inData["Email"];
 	
-	$conn = new mysqli("localhost", "Itachi", "!COP4331isthebest", "COP4331");
+	$conn = new mysqli("localhost", "Itachi", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error) 
 	{
 		returnWithError( $conn->connect_error );
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT firstName, lastName FROM Table WHERE firstName LIKE='?' AND lastName LIKE='?'");
-		$firstName = $inData["FirstName"];
-    	$lastName = $inData["LastName"];
+		$stmt = $conn->prepare("SELECT * FROM Contact WHERE (FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID=?");
 		
-		$stmt->bind_param("sssss", $id, $firstName, $lastName, $phoneNumber, $emailAddress);
+		$stmt->bind_param("sssss", $firstName, $lastName, $phoneNumber, $emailAddress, $userId);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
@@ -34,7 +36,7 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-			$searchResults .= '"' . $row["Name"] . '"';
+			$searchResults .= '{"firstName" : "' . $row["FirstName"] . '", "lastName" : "' . $row["LastName"] . '", "phoneNumber" : "' . $row["Phone"] . '", "emailAddress" : "' . $row["Email"] . '" , "userId" : "' . $row["UserID"] . '"}';
 		}
 		
 		if( $searchCount == 0 )
