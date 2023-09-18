@@ -350,7 +350,7 @@ const Contact = ({ contact, updateContact, deleteContact }) => {
           </button>
         </span>
       </td>
-    </tr>;
+    </tr>);
   return !isEditing ? <tr>
     <td><ProfileIcon contact={contact} /></td>
     <td>{contact.firstName}</td>
