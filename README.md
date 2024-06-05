@@ -1,9 +1,9 @@
-# cop4331-project
+# Processes for Object-Oriented Software Development Project
 
 [seriousbusinessincorporated.online](seriousbusinessincorporated.online)
 
 ## Deployment steps
 
-Run `npm run build` in the `frontend` directory to create a production build of the front end
+Run `npm run build` in the `frontend` directory to create a production build of the front-end
 
 Then run `./deploy.sh` in the root directory of the repo to deploy front-end/API to the droplet
